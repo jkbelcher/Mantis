@@ -32,7 +32,7 @@ public class PulsePattern extends MantisPattern {
 
         brightness = (float) (Math.cos( Math.toRadians(brightDegrees)) + 1) * (maxBrightness.getValuef() / 2);
 
-        for (TailPixel tp : this.model.tailPixels) {
+        for (PuppetPixel tp : this.model.puppetPixels) {
             colorValue = (float)(Math.sqrt(Math.pow(tp.p.y, 2) + Math.pow(tp.p.x, 2)) / ((model.xMax / model.yMax) * model.xMax)) * 360;
             colors[tp.p.index] = LXColor.hsb( colorValue, 100, brightness);
         }

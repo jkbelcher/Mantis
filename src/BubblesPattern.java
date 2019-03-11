@@ -6,7 +6,7 @@ import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 
 /* Bubbles.
- * This pattern Copyright(c)2018 Justin Belcher, use with permission only.
+ * This pattern Copyright(c)2019 Justin Belcher, use with permission only.
  */
 public class BubblesPattern extends MantisPatternNormalized {
 
@@ -58,7 +58,7 @@ public class BubblesPattern extends MantisPatternNormalized {
         this.clearColors();
         
         //Get the currently targeted normalized pixel group
-        TailPixelGroup group = this.modelN.getTailPixelGroup();
+        PuppetPixelGroup group = this.modelN.getPuppetPixelGroup();
 
         int maxPos = group.size() - 1;
         
@@ -89,7 +89,7 @@ public class BubblesPattern extends MantisPatternNormalized {
         
         //Render every bubble
         for (Bubble bubble : this.bubbles) {
-            colors[group.tailPixels.get(bubble.pos).getIndexColor()] = bubble.color;
+            colors[group.puppetPixels.get(bubble.pos).getIndexColor()] = bubble.color;
         }
     }
 

@@ -124,8 +124,8 @@ public class RisingSquaresPattern extends MantisPattern {
         }
 
         //Render every square
-        for (int i = 0; i < model.tailPixels.size(); i++) {
-            TailPixel tp = model.tailPixels.get(i);
+        for (int i = 0; i < model.puppetPixels.size(); i++) {
+            PuppetPixel tp = model.puppetPixels.get(i);
             
             for (Square s : this.squares) {
                 if (tp.p.xn > s.xLow && tp.p.xn < s.xHigh && tp.p.yn > s.yLow && tp.p.yn < s.yHigh) {

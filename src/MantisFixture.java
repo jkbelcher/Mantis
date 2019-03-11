@@ -13,7 +13,7 @@ public class MantisFixture extends LXAbstractFixtureMapped implements Comparable
 
     public final int channel;
     public final MantisController controller;
-    public final List<TailPixel> tailPixels = new ArrayList<TailPixel>();
+    public final List<PuppetPixel> puppetPixels = new ArrayList<PuppetPixel>();
     
     public MantisFixture(int channel, MantisController controller) {
         this.channel = channel;
@@ -27,24 +27,24 @@ public class MantisFixture extends LXAbstractFixtureMapped implements Comparable
         return compareChannel - this.channel;
     }
 
-    public void AddTailPixel(TailPixel tailPixel)
+    public void addPuppetPixel(PuppetPixel puppetPixel)
     {
-        this.tailPixels.add(tailPixel);
-        this.addPoint(tailPixel.p);
+        this.puppetPixels.add(puppetPixel);
+        this.addPoint(puppetPixel.p);
     }
     
     //Called once after model is loaded
     protected void setLoaded() {
-        Collections.sort(tailPixels);
+        Collections.sort(puppetPixels);
     }
         
     //Return, in physical order, the indices of the LXPoints in this channel.
     //The indices are derived from the order in which the points were loaded into the model,
     //and therefore don't necessarily match anything physical.
     public int[] getPointIndicesForOutput() {
-        int[] indices = new int[this.tailPixels.size()];
+        int[] indices = new int[this.puppetPixels.size()];
         int i = 0;
-        for (TailPixel tp : this.tailPixels) {
+        for (PuppetPixel tp : this.puppetPixels) {
             indices[i++] = tp.p.index;
           }
         return indices;        

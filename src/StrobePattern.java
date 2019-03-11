@@ -29,10 +29,10 @@ public class StrobePattern extends MantisPatternNormalized {
     public int strobeColor = LXColor.WHITE;
 
     public StrobePattern(LX lx)  {
-        this(lx, new TailPixelGroup[] { MantisCode.applet.model.feathersLR });
+        this(lx, new PuppetPixelGroup[] { MantisCode.applet.model.feathersLR });
     }
 
-    public StrobePattern(LX lx, TailPixelGroup[] groups) {
+    public StrobePattern(LX lx, PuppetPixelGroup[] groups) {
         super(lx, groups);
 
         addParameter(strobe);
@@ -82,10 +82,10 @@ public class StrobePattern extends MantisPatternNormalized {
             
             float outputLevel = this.runMs > this.endOn ? 0f : 1f;
 
-            TailPixelGroup tailPixelGroup = this.modelN.getTailPixelGroup();
+            PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
             
-            for (int i = 0; i < tailPixelGroup.size(); i++) {
-                TailPixelPos tpp = tailPixelGroup.tailPixels.get(i);
+            for (int i = 0; i < puppetPixelGroup.size(); i++) {
+                PuppetPixelPos tpp = puppetPixelGroup.puppetPixels.get(i);
                 colors[tpp.getIndexColor()] = LXColor.scaleBrightness(this.strobeColor, outputLevel);
             }
         }    

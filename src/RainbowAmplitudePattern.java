@@ -66,7 +66,7 @@ public class RainbowAmplitudePattern extends MantisPattern {
             }
         }
 
-        for (TailPixel tp : this.model.tailPixels) {
+        for (PuppetPixel tp : this.model.puppetPixels) {
             colorValue = (float)(Math.sqrt(Math.pow(tp.p.y, 2) + Math.pow(tp.p.x, 2)) / ((model.xMax / model.yMax) * model.xMax)) * 360;
             if (lrSplit.getValueb() == false) {
                 currentSample = mixBandFloats;

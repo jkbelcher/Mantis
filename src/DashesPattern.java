@@ -28,7 +28,7 @@ public class DashesPattern extends MantisPatternNormalized {
     public DashesPattern(LX lx) {
         super(lx);
 
-        this.modelN.setTailPixelGroup(model.spiralsCW_IO);  //start with a fun one
+        this.modelN.setPuppetPixelGroup(model.spiralsCW_IO);  //start with a fun one
         
         addParameter(hue);
         addParameter(length);
@@ -92,13 +92,13 @@ public class DashesPattern extends MantisPatternNormalized {
         }
         
         //Get the currently targeted normalized pixel group
-        TailPixelGroup tailPixelGroup = this.modelN.getTailPixelGroup();
+        PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
 
         //Draw it
         int b=0;
-        for (int i = 0; i < tailPixelGroup.size(); i++) {
-            TailPixelPos tpp = tailPixelGroup.tailPixels.get(i);
-            colors[tpp.getIndexColor()] = LXColor.hsb(hue, 100f, bright[b]);
+        for (int i = 0; i < puppetPixelGroup.size(); i++) {
+            PuppetPixelPos ppp = puppetPixelGroup.puppetPixels.get(i);
+            colors[ppp.getIndexColor()] = LXColor.hsb(hue, 100f, bright[b]);
             
             //Cycle through the brightness array
             b++;

@@ -44,12 +44,12 @@ public class DemoChannelPattern extends MantisPattern {
         for (MantisFixture fixture : model.allMantisFixtures) {
             if (fixture.channel == channel)
             {
-                for (TailPixel tp : fixture.tailPixels) {
+                for (PuppetPixel tp : fixture.puppetPixels) {
                         colors[tp.p.index] = LXColor.RED;
                 }
                 
-                if (fixture.tailPixels.size() > index) {
-                    colors[fixture.tailPixels.get(index).p.index] = LXColor.BLUE;
+                if (fixture.puppetPixels.size() > index) {
+                    colors[fixture.puppetPixels.get(index).p.index] = LXColor.BLUE;
                 }
             }
         }

@@ -1,18 +1,18 @@
 import heronarts.lx.model.LXPoint;
 import processing.core.PApplet;
 
-public class TailPixel extends LXAbstractFixtureMapped implements Comparable<TailPixel> {
+public class PuppetPixel extends LXAbstractFixtureMapped implements Comparable<PuppetPixel> {
 
-    public final TailPixelParameters params;
+    public final PuppetPixelParameters params;
     public final LXPoint p;
     public final int feather;
     public final int panel;
 
-    public TailPixel(TailPixelParameters params) {
+    public PuppetPixel(PuppetPixelParameters params) {
         this.params = params;
-        //PApplet.println("TailPixel: ",this.params.x, this.params.y, this.params.z);
+        //PApplet.println("PuppetPixel: ",this.params.x, this.params.y, this.params.z);
 
-        //Each LXPoint should be created only once.  We'll do it here, in the TailPixel constructor.
+        //Each LXPoint should be created only once.  We'll do it here, in the PuppetPixel constructor.
         LXPoint lxPoint = new LXPoint(params.x, params.y, params.z);
         this.p = lxPoint;
         
@@ -21,7 +21,7 @@ public class TailPixel extends LXAbstractFixtureMapped implements Comparable<Tai
     }
 
     @Override
-    public int compareTo(TailPixel o) {
+    public int compareTo(PuppetPixel o) {
         int comparePosition = o.params.position;
         return comparePosition - this.params.position;
     }

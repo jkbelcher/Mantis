@@ -3,34 +3,34 @@ import java.util.List;
 
 import heronarts.lx.model.LXAbstractFixture;
 
-public class TailPixelGroup extends LXAbstractFixture {
+public class PuppetPixelGroup extends LXAbstractFixture {
 
-	public final List<TailPixelPos> tailPixels;
+	public final List<PuppetPixelPos> puppetPixels;
 	public int id = 0;
 	
-	public TailPixelGroup() {
+	public PuppetPixelGroup() {
 	    this(0);
 	}
 
-	public TailPixelGroup(int id) {
+	public PuppetPixelGroup(int id) {
 	    this.id=id;
-	    tailPixels = new ArrayList<TailPixelPos>();
+	    puppetPixels = new ArrayList<PuppetPixelPos>();
     }
 
-	public TailPixelGroup addTailPixelPosition(TailPixelPos newItem) {
-		this.tailPixels.add(newItem);
+	public PuppetPixelGroup addPuppetPixelPosition(PuppetPixelPos newItem) {
+		this.puppetPixels.add(newItem);
 		this.addPoint(newItem.getPoint());
 		return this;
 	}
 	
-	public TailPixelGroup copyIndicesToChildren() {
-	    for (int i = 0; i<this.tailPixels.size(); i++) {
-	        this.tailPixels.get(i).setIndexGroup(i);
+	public PuppetPixelGroup copyIndicesToChildren() {
+	    for (int i = 0; i<this.puppetPixels.size(); i++) {
+	        this.puppetPixels.get(i).setIndexGroup(i);
 	    }
 	    return this;
 	}	
 	
-	public TailPixelGroup calculateNormalsByIndex()	{
+	public PuppetPixelGroup calculateNormalsByIndex()	{
 		//Once all children have been added to the group,
 		//calculate the normalized positions of children based on index
 		
@@ -38,12 +38,12 @@ public class TailPixelGroup extends LXAbstractFixture {
 		//and 1 include all points.  To do this, the first normalized position will be 1/[number of pixels].
 		//The last normalized position will be [number of pixels]/[number of pixels] = 1.
 		//No pixel within the group will have a normalized position of zero.
-		//Note this is true for our TailPixelGroups but not necessarily for other normalized
+		//Note this is true for our PuppetPixelGroups but not necessarily for other normalized
 		//positions in the LX framework.
 		
-		float numPixels = (float)this.tailPixels.size();
+		float numPixels = (float)this.puppetPixels.size();
 		
-		for (TailPixelPos item : this.tailPixels) {
+		for (PuppetPixelPos item : this.puppetPixels) {
 			item.setNormal(((float)(item.getIndexGroup()+1))/numPixels);			
 		}		
 		
@@ -51,6 +51,6 @@ public class TailPixelGroup extends LXAbstractFixture {
 	}
 
 	public int size() {
-	    return this.tailPixels.size();
+	    return this.puppetPixels.size();
 	}
 }

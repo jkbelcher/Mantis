@@ -191,15 +191,15 @@ public class VUMeterPattern extends MantisPattern {
             int color = LXColor.hsb(hue, 100, 100);         
             
             for (int iPixel = 0; iPixel < litPixels; iPixel++) {                
-                colors[gb.group.tailPixels.get(iPixel).getIndexColor()] = color;
+                colors[gb.group.puppetPixels.get(iPixel).getIndexColor()] = color;
                 if (mirror) {
-                    colors[gb.group.tailPixels.get(gb.group.size()-1-iPixel).getIndexColor()] = color;
+                    colors[gb.group.puppetPixels.get(gb.group.size()-1-iPixel).getIndexColor()] = color;
                 }
             }
             if (litPixels < numPixels) {
-                colors[gb.group.tailPixels.get(litPixels).getIndexColor()] = LXColor.scaleBrightness(color, percentLastPixel);
+                colors[gb.group.puppetPixels.get(litPixels).getIndexColor()] = LXColor.scaleBrightness(color, percentLastPixel);
                 if (mirror)
-                    colors[gb.group.tailPixels.get(gb.group.size()-1-litPixels).getIndexColor()] = LXColor.scaleBrightness(color, percentLastPixel);                    
+                    colors[gb.group.puppetPixels.get(gb.group.size()-1-litPixels).getIndexColor()] = LXColor.scaleBrightness(color, percentLastPixel);                    
             }
             
             // Get peaks from a meter with a slower release
@@ -209,18 +209,18 @@ public class VUMeterPattern extends MantisPattern {
             if (iPeakPixel < numPixels && mirror) {
                 iPeakPixel++;               
             }
-            colors[gb.group.tailPixels.get(iPeakPixel).getIndexColor()] = LXColor.WHITE;
+            colors[gb.group.puppetPixels.get(iPeakPixel).getIndexColor()] = LXColor.WHITE;
             if (mirror)
-                colors[gb.group.tailPixels.get(gb.group.size()-1-iPeakPixel).getIndexColor()] = LXColor.WHITE;                
+                colors[gb.group.puppetPixels.get(gb.group.size()-1-iPeakPixel).getIndexColor()] = LXColor.WHITE;                
         }
     }
 
     private class GroupBandPair {
-        public TailPixelGroup group;
+        public PuppetPixelGroup group;
         public int iBand;
         public float hueOffset;
         
-        public GroupBandPair (TailPixelGroup edge, int iBand, float hueOffset) {
+        public GroupBandPair (PuppetPixelGroup edge, int iBand, float hueOffset) {
             this.group = edge;
             this.iBand = iBand;
             this.hueOffset = hueOffset;

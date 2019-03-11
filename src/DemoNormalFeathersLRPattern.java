@@ -29,7 +29,7 @@ public class DemoNormalFeathersLRPattern extends MantisPattern {
         float width = this.width.getValuef();
         
         //Loop over normalized collection and light pixels that are close to the position
-        for (TailPixelPos tpp : model.feathersLR.tailPixels) {
+        for (PuppetPixelPos tpp : model.feathersLR.puppetPixels) {
             if (tpp.getN() > position - width && tpp.getN() < position + width) {
                 float brightness = (width - Math.abs(position-tpp.getN())) / width;
                 colors[tpp.getIndexColor()] = LXColor.scaleBrightness(LXColor.RED, brightness);

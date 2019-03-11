@@ -1,4 +1,4 @@
-public class TailPixelParameters {
+public class PuppetPixelParameters {
     int id;
     double x;
     double y;

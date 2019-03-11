@@ -1,22 +1,22 @@
 import heronarts.lx.model.LXPoint;
 
-public class TailPixelPos {
+public class PuppetPixelPos {
 
-	private final TailPixel pixel;
+	private final PuppetPixel pixel;
 	private int indexGroup;
-	private float n;    //Normalized position (0..1) within the parent TailPixelGroup
+	private float n;    //Normalized position (0..1) within the parent PuppetPixelGroup
 	
-	public TailPixelPos(TailPixel pixel) {		
+	public PuppetPixelPos(PuppetPixel pixel) {		
 		this(pixel, 0);
 	}
 	
-	public TailPixelPos(TailPixel pixel, int indexGroup) {
+	public PuppetPixelPos(PuppetPixel pixel, int indexGroup) {
 		this.pixel = pixel;
 		this.indexGroup = indexGroup;
 		this.n = 0f;
 	}
 
-	public TailPixelPos setIndexGroup(int index) {
+	public PuppetPixelPos setIndexGroup(int index) {
 		this.indexGroup = index;
 		return this;
 	}
@@ -25,7 +25,7 @@ public class TailPixelPos {
 	    return this.indexGroup;
 	}
 	
-	public TailPixelPos setNormal(float n) {
+	public PuppetPixelPos setNormal(float n) {
 		this.n = n;
 		return this;
 	}

@@ -44,14 +44,14 @@ public class RainbowShiftPattern extends MantisPatternNormalized {
         huePos %= 360;
         
         //Get the currently targeted normalized pixel group
-        TailPixelGroup tailPixelGroup = this.modelN.getTailPixelGroup();
+        PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
 
-        int numPixels = tailPixelGroup.size();
+        int numPixels = puppetPixelGroup.size();
         float numPixelsf = (float) numPixels;
         float degreesPerPixel = (hueRange/numPixelsf);
 
         for (int i = 0; i < numPixels; i++) {
-            TailPixelPos tpp = tailPixelGroup.tailPixels.get(i);
+            PuppetPixelPos tpp = puppetPixelGroup.puppetPixels.get(i);
             float hue = ((degreesPerPixel*((float) i))+huePos) % 360;
             colors[tpp.getIndexColor()] = LXColor.hsb(hue, 100, 100);
         }        

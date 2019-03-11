@@ -41,7 +41,7 @@ public class AudioMantisPattern extends MantisPattern {
             rightBandFloats[i] = fftRight.getBand(i);
         }
 
-        for (TailPixel tp : this.model.tailPixels) {
+        for (PuppetPixel tp : this.model.puppetPixels) {
             if (tp.feather == 0){
                 int color = LXColor.hsb(360, 50, rightBandFloats[(30 - tp.params.rung) % numBands] * 100.0);
                 colors[tp.p.index] = color;

@@ -26,54 +26,54 @@ public class MantisModel extends LXModel {
     public final List<MantisFixture> allMantisFixtures;   //One fixture for each controller channel.  Panels and Feathers are fixtures.
     
     public final List<MantisController> controllers;
-    public final List<TailPixel> tailPixels;
+    public final List<PuppetPixel> puppetPixels;
     
     //Logical groupings of pixels
     //Use these maps to find specific components by ID
-    public final List<TailPixelGroup> feathers;
-    public final List<TailPixelGroup> panels;
-    public final TailPixelGroup body;
-    public final TailPixelGroup neck;
-    public final TailPixelGroup eyes;
+    public final List<PuppetPixelGroup> feathers;
+    public final List<PuppetPixelGroup> panels;
+    public final PuppetPixelGroup body;
+    public final PuppetPixelGroup neck;
+    public final PuppetPixelGroup eyes;
     
     //Normalized mappings
     //There are a bunch of different ways to group/order the spirals.
     //Use these objects to conveniently address pixels in a particular order, using a normalized 0..1 range.
-    //Each group contains a list of pairs of [Tailpixel] + [normalized position within the group]
-    public final TailPixelGroup feathersLR;
-    public final TailPixelGroup panelsLR;
-    public final TailPixelGroup spiralsCW_IO;
-    public final TailPixelGroup spiralsCCW_IO;        
+    //Each group contains a list of pairs of [PuppetPixel] + [normalized position within the group]
+    public final PuppetPixelGroup feathersLR;
+    public final PuppetPixelGroup panelsLR;
+    public final PuppetPixelGroup spiralsCW_IO;
+    public final PuppetPixelGroup spiralsCCW_IO;        
     //TO-DO: normalized each direction overall spiral
     
     //Head Eye pixels
     //TO-DO: Add [head] eye pixels here.  They will load from a different .csv file    
        
-    public MantisModel(LXFixture[] allFixtures, List<MantisFixture> allMantisFixtures, List<MantisController> controllers, List<TailPixel> tailPixels) {
+    public MantisModel(LXFixture[] allFixtures, List<MantisFixture> allMantisFixtures, List<MantisController> controllers, List<PuppetPixel> puppetPixels) {
         super(allFixtures);
 
         this.allMantisFixtures = allMantisFixtures;
         this.controllers = controllers;
-        this.tailPixels = tailPixels;
+        this.puppetPixels = puppetPixels;
         
-        //Sort TailPixels within each collection
+        //Sort PuppetPixels within each collection
         Collections.sort(this.allMantisFixtures);
         for (MantisFixture fixture : this.allMantisFixtures) {
             fixture.setLoaded();
         }
         
         //Logical groups
-        this.feathers = new ArrayList<TailPixelGroup>();
-        this.panels = new ArrayList<TailPixelGroup>();
-        this.body = new TailPixelGroup();
-        this.neck = new TailPixelGroup();
-        this.eyes = new TailPixelGroup();
+        this.feathers = new ArrayList<PuppetPixelGroup>();
+        this.panels = new ArrayList<PuppetPixelGroup>();
+        this.body = new PuppetPixelGroup();
+        this.neck = new PuppetPixelGroup();
+        this.eyes = new PuppetPixelGroup();
         
         //Normalized mappings
-        this.feathersLR = new TailPixelGroup();
-        this.panelsLR = new TailPixelGroup();
-        this.spiralsCW_IO = new TailPixelGroup();
-        this.spiralsCCW_IO = new TailPixelGroup();
+        this.feathersLR = new PuppetPixelGroup();
+        this.panelsLR = new PuppetPixelGroup();
+        this.spiralsCW_IO = new PuppetPixelGroup();
+        this.spiralsCCW_IO = new PuppetPixelGroup();
         
         this.initializeSubCollections();
     }
@@ -81,71 +81,71 @@ public class MantisModel extends LXModel {
     private void initializeSubCollections() {
         //Feathers
         for (int i = 1; i <= 13; i++) {
-            this.feathers.add(new TailPixelGroup(i));            
+            this.feathers.add(new PuppetPixelGroup(i));            
         }
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isFeatherPixel()) {
-                this.feathers.get(p.feather-1).addTailPixelPosition(new TailPixelPos(p));
+                this.feathers.get(p.feather-1).addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
         //Panels
         for (int i = 1; i <= 12; i++) {
-            this.panels.add(new TailPixelGroup(i));            
+            this.panels.add(new PuppetPixelGroup(i));            
         }
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isPanelPixel()) {
-                this.panels.get(p.panel-1).addTailPixelPosition(new TailPixelPos(p));
+                this.panels.get(p.panel-1).addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
         //Body
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isBodyPixel()) {
-                this.body.addTailPixelPosition(new TailPixelPos(p));
+                this.body.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
         //Neck
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isNeckPixel()) {
-                this.neck.addTailPixelPosition(new TailPixelPos(p));
+                this.neck.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
         //Eyes
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isEyePixel()) {
-                this.eyes.addTailPixelPosition(new TailPixelPos(p));
+                this.eyes.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
                 
     	//FeathersLR
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isFeatherPixel()) {                
-                this.feathersLR.addTailPixelPosition(new TailPixelPos(p));
+                this.feathersLR.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
         //PanelsLR
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isPanelPixel()) {                
-                this.panelsLR.addTailPixelPosition(new TailPixelPos(p));
+                this.panelsLR.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
         //SpiralsCW_IO = Spirals, Clockwise, Inside->Outside
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isPanelPixel() && p.params.spiral % 2 == 0) {                
-                this.spiralsCW_IO.addTailPixelPosition(new TailPixelPos(p));
+                this.spiralsCW_IO.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }
         
         //SpiralsCCW_IO = Spirals, Counter-Clockwise, Inside->Outside
-        for (TailPixel p : this.tailPixels) {
+        for (PuppetPixel p : this.puppetPixels) {
             if (p.isPanelPixel() && p.params.spiral % 2 != 0) {                
-                this.spiralsCCW_IO.addTailPixelPosition(new TailPixelPos(p));
+                this.spiralsCCW_IO.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
         }        
 
@@ -156,39 +156,39 @@ public class MantisModel extends LXModel {
         //This is in case a collection wants to sort itself using a normalized value.
 
         //Feathers
-        for (TailPixelGroup g : this.feathers) {
-            g.tailPixels.sort((p1,p2) -> Float.compare(p1.getPoint().r, p2.getPoint().r));
+        for (PuppetPixelGroup g : this.feathers) {
+            g.puppetPixels.sort((p1,p2) -> Float.compare(p1.getPoint().r, p2.getPoint().r));
             g.copyIndicesToChildren().calculateNormalsByIndex();
         }
         
         //Panels
-        for (TailPixelGroup g : this.panels) {
-            g.tailPixels.sort((p1,p2) -> Float.compare(p1.getPoint().r, p2.getPoint().r));
+        for (PuppetPixelGroup g : this.panels) {
+            g.puppetPixels.sort((p1,p2) -> Float.compare(p1.getPoint().r, p2.getPoint().r));
             g.copyIndicesToChildren().calculateNormalsByIndex();
         }
 
         //Body
-        this.body.tailPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
+        this.body.puppetPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
         this.body.copyIndicesToChildren().calculateNormalsByIndex();
                 
         //Neck
-        this.neck.tailPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
+        this.neck.puppetPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
         this.neck.copyIndicesToChildren().calculateNormalsByIndex();
         
         //Eyes
-        this.eyes.tailPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
+        this.eyes.puppetPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
         this.eyes.copyIndicesToChildren().calculateNormalsByIndex();
         
-        this.feathersLR.tailPixels.sort((p1,p2) -> p1.getFeather() == p2.getFeather() ? p1.getPosition() - p2.getPosition() : p1.getFeather() - p2.getFeather());
+        this.feathersLR.puppetPixels.sort((p1,p2) -> p1.getFeather() == p2.getFeather() ? p1.getPosition() - p2.getPosition() : p1.getFeather() - p2.getFeather());
         this.feathersLR.copyIndicesToChildren().calculateNormalsByIndex();
 
-        this.panelsLR.tailPixels.sort((p1,p2) -> p1.getPanel() == p2.getPanel() ? Float.compare(p1.getPoint().r, p2.getPoint().r) : p1.getPanel() - p2.getPanel());
+        this.panelsLR.puppetPixels.sort((p1,p2) -> p1.getPanel() == p2.getPanel() ? Float.compare(p1.getPoint().r, p2.getPoint().r) : p1.getPanel() - p2.getPanel());
         this.panelsLR.copyIndicesToChildren().calculateNormalsByIndex();
         
-        this.spiralsCW_IO.tailPixels.sort((p1,p2) -> p1.getSpiral() == p2.getSpiral() ? p2.getPosition() - p1.getPosition() : p2.getSpiral() - p1.getSpiral());
+        this.spiralsCW_IO.puppetPixels.sort((p1,p2) -> p1.getSpiral() == p2.getSpiral() ? p2.getPosition() - p1.getPosition() : p2.getSpiral() - p1.getSpiral());
         this.spiralsCW_IO.copyIndicesToChildren().calculateNormalsByIndex();    //*Could do normals by position and not by spiral.
 
-        this.spiralsCCW_IO.tailPixels.sort((p1,p2) -> p1.getSpiral() == p2.getSpiral() ? p2.getPosition() - p1.getPosition() : p2.getSpiral() - p1.getSpiral());
+        this.spiralsCCW_IO.puppetPixels.sort((p1,p2) -> p1.getSpiral() == p2.getSpiral() ? p2.getPosition() - p1.getPosition() : p2.getSpiral() - p1.getSpiral());
         this.spiralsCCW_IO.copyIndicesToChildren().calculateNormalsByIndex();
 
     	return this;
@@ -204,24 +204,24 @@ public class MantisModel extends LXModel {
     {
         final List<MantisFixture> allMantisFixtures = new ArrayList<MantisFixture>();
         final List<MantisController> controllers = new ArrayList<MantisController>();
-        final List<TailPixel> tailPixels = new ArrayList<TailPixel>();
+        final List<PuppetPixel> puppetPixels = new ArrayList<PuppetPixel>();
 
         //We use dictionaries to pair objects during the loading process
         final TreeMap<Integer,MantisController> controllersDict = new TreeMap<Integer,MantisController>();
 
-        //Controllers
-        List<ControllerParameters> cP = ReadControllersFromFile(controllerFile);
+        // Controllers
+        List<ControllerParameters> cP = feadControllersFromFile(controllerFile);
         for (ControllerParameters p : cP) {
             MantisController newController = new MantisController(p);
             controllers.add(newController);
             controllersDict.put(p.id, newController);
         }
 
-        //Tail Pixels
-        List<TailPixelParameters> tpP = ReadTailPixelsFromFile(pixelFile);
-        for (TailPixelParameters p : tpP) {
-            TailPixel newTailPixel = new TailPixel(p);
-            tailPixels.add(newTailPixel);
+        // Puppet Pixels
+        List<PuppetPixelParameters> tpP = readPuppetPixelsFromFile(pixelFile);
+        for (PuppetPixelParameters p : tpP) {
+            PuppetPixel newPuppetPixel = new PuppetPixel(p);
+            puppetPixels.add(newPuppetPixel);
 
             MantisController controller = controllersDict.get(p.controllerID);
 
@@ -237,13 +237,13 @@ public class MantisModel extends LXModel {
 
             //Add pixel to containing fixture.
             //This subsequently calls the important model loading method LXAbstractFixture.addPoint(LXPoint)
-            fixture.AddTailPixel(newTailPixel);
+            fixture.addPuppetPixel(newPuppetPixel);
         }
 
         //LX wants a list of fixtures that as a whole contains one instance of each LXPoint.
         List<LXFixture> _fixtures = new ArrayList<LXFixture>(allMantisFixtures);
 
-        return new MantisModel(_fixtures.toArray(new LXFixture[_fixtures.size()]), allMantisFixtures, controllers, tailPixels);
+        return new MantisModel(_fixtures.toArray(new LXFixture[_fixtures.size()]), allMantisFixtures, controllers, puppetPixels);
     }
 
     private static CellProcessor[] getControllerCsvProcessors() {
@@ -254,7 +254,7 @@ public class MantisModel extends LXModel {
         };
     }
 
-    protected static List<ControllerParameters> ReadControllersFromFile(String filename) throws Exception {
+    protected static List<ControllerParameters> feadControllersFromFile(String filename) throws Exception {
 
         final ArrayList<ControllerParameters> results = new ArrayList<ControllerParameters>();
 
@@ -285,7 +285,7 @@ public class MantisModel extends LXModel {
         return results;
     }
 
-    private static CellProcessor[] getTailPixelCsvProcessors() {
+    private static CellProcessor[] getPuppetPixelCsvProcessors() {
         return new CellProcessor[] {
             new ParseInt(), // int controllerID;
             new ParseInt(), // int controllerChannel;
@@ -300,9 +300,9 @@ public class MantisModel extends LXModel {
         };
     }
 
-    protected static List<TailPixelParameters> ReadTailPixelsFromFile(String filename) throws Exception {
+    protected static List<PuppetPixelParameters> readPuppetPixelsFromFile(String filename) throws Exception {
 
-        final ArrayList<TailPixelParameters> results = new ArrayList<TailPixelParameters>();
+        final ArrayList<PuppetPixelParameters> results = new ArrayList<PuppetPixelParameters>();
 
         ICsvMapReader mapReader = null;
         try {
@@ -310,11 +310,11 @@ public class MantisModel extends LXModel {
 
             // the header columns are used as the keys to the Map
             final String[] header = mapReader.getHeader(true);
-            final CellProcessor[] processors = getTailPixelCsvProcessors();
+            final CellProcessor[] processors = getPuppetPixelCsvProcessors();
 
             Map<String, Object> c;
             while((c = mapReader.read(header, processors)) != null) {
-                TailPixelParameters p = new TailPixelParameters();
+                PuppetPixelParameters p = new PuppetPixelParameters();
 
                 p.controllerID = Integer.parseInt(c.get("controllerID").toString());
                 p.controllerChannel = Integer.parseInt(c.get("controllerChannel").toString());

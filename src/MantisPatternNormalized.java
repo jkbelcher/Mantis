@@ -15,7 +15,7 @@ public abstract class MantisPatternNormalized extends MantisPattern {
     
     public final BooleanParameter nextGroup = 
             new BooleanParameter("NextGroup")
-            .setDescription("Change the pattern to target the next TailPixelGroup")
+            .setDescription("Change the pattern to target the next PuppetPixelGroup")
             .setMode(Mode.MOMENTARY);
 
     public MantisPatternNormalized(LX lx) {
@@ -34,7 +34,7 @@ public abstract class MantisPatternNormalized extends MantisPattern {
             });
     }
 
-    public MantisPatternNormalized(LX lx, TailPixelGroup[] groups) {
+    public MantisPatternNormalized(LX lx, PuppetPixelGroup[] groups) {
         super(lx);
         
         this.modelN = new MantisModelNormalized(model, groups);

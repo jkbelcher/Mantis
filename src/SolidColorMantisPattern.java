@@ -13,7 +13,7 @@ public class SolidColorMantisPattern extends MantisPatternNormalized {
         .setDescription("Brightness");
 
     public SolidColorMantisPattern(LX lx) {
-        super(lx, new TailPixelGroup[] { 
+        super(lx, new PuppetPixelGroup[] { 
                 ((MantisModel)(lx.model)).feathersLR,
                 ((MantisModel)(lx.model)).panelsLR,
                 ((MantisModel)(lx.model)).body,
@@ -40,7 +40,7 @@ public class SolidColorMantisPattern extends MantisPatternNormalized {
 
         int color = LXColor.hsb(hue, 100, brightness);
 
-        for (TailPixelPos p : this.modelN.getTailPixelGroup().tailPixels) {
+        for (PuppetPixelPos p : this.modelN.getPuppetPixelGroup().puppetPixels) {
             colors[p.getIndexColor()] = color;
         }
     }

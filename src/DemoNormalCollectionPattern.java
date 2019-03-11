@@ -13,7 +13,7 @@ public class DemoNormalCollectionPattern extends MantisPattern {
     
     public final BooleanParameter nextGroup = 
             new BooleanParameter("NextGroup")
-            .setDescription("Change the pattern to target the next TailPixelGroup")
+            .setDescription("Change the pattern to target the next PuppetPixelGroup")
             .setMode(Mode.MOMENTARY);
     public final CompoundParameter position = 
             new CompoundParameter("Position", 0, 0, 1)
@@ -26,7 +26,7 @@ public class DemoNormalCollectionPattern extends MantisPattern {
         super(lx);
         
         this.modelN = new MantisModelNormalized(model);
-        this.modelN.setTailPixelGroup(model.spiralsCW_IO);
+        this.modelN.setPuppetPixelGroup(model.spiralsCW_IO);
 
         addParameter(nextGroup);
         this.nextGroup.addListener(new LXParameterListener() {
@@ -60,8 +60,8 @@ public class DemoNormalCollectionPattern extends MantisPattern {
         float width = this.width.getValuef();
         
         //Loop over normalized collection and light pixels that are close to the position
-        TailPixelGroup targetGroup = this.modelN.getTailPixelGroup();
-        for (TailPixelPos tpp : targetGroup.tailPixels) {
+        PuppetPixelGroup targetGroup = this.modelN.getPuppetPixelGroup();
+        for (PuppetPixelPos tpp : targetGroup.puppetPixels) {
             if (tpp.getN() > position - width && tpp.getN() < position + width) {
                 float brightness = (width - Math.abs(position-tpp.getN())) / width;
                 colors[tpp.getIndexColor()] = LXColor.scaleBrightness(LXColor.RED, brightness);

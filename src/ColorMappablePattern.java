@@ -22,10 +22,10 @@ public class ColorMappablePattern extends MantisPatternNormalized {
             .setDescription("Brightness");
     
     public ColorMappablePattern(LX lx) {
-        this(lx, new TailPixelGroup[] { MantisCode.applet.model.feathersLR });
+        this(lx, new PuppetPixelGroup[] { MantisCode.applet.model.feathersLR });
     }
 
-    public ColorMappablePattern(LX lx, TailPixelGroup[] groups) {
+    public ColorMappablePattern(LX lx, PuppetPixelGroup[] groups) {
         super(lx, groups);
 
         addParameter(red);
@@ -50,11 +50,11 @@ public class ColorMappablePattern extends MantisPatternNormalized {
         
         int c = LXColor.scaleBrightness(LXColor.rgb(red, green, blue), brightness);
         
-        TailPixelGroup tailPixelGroup = this.modelN.getTailPixelGroup();
+        PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
         
-        for (int i = 0; i < tailPixelGroup.size(); i++) {
-            TailPixelPos tpp = tailPixelGroup.tailPixels.get(i);
-            colors[tpp.getIndexColor()] = c;
+        for (int i = 0; i < puppetPixelGroup.size(); i++) {
+            PuppetPixelPos ppp = puppetPixelGroup.puppetPixels.get(i);
+            colors[ppp.getIndexColor()] = c;
         }
 
     }

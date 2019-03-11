@@ -63,17 +63,12 @@ public class MantisCode extends PApplet implements LXOscListener {
     public static final List<StreamingACNDatagram> datagrams = new ArrayList<StreamingACNDatagram>();
 
     public static void main(String[] args) {
-        //		PApplet.main("MantisCode");
         PApplet.main(new String[] { "--present", MantisCode.class.getName() });
     }
 
     public void settings(){
         size(displayWidth, displayHeight, P3D);
         pixelDensity(displayDensity());
-        /*if (frame != null) {
-          frame.setResizable(true);
-        }
-        */
     }
     
     public void initialize(LXStudio lx, LXStudio.UI ui) {
@@ -160,7 +155,7 @@ public class MantisCode extends PApplet implements LXOscListener {
             PApplet.println("Loaded"
                     ,model.controllers.size() + " controllers,"
                     ,model.allMantisFixtures.size() + " fixtures,"
-                    ,model.tailPixels.size() + " tailPixels,"
+                    ,model.puppetPixels.size() + " puppetPixels,"
                     ,"and " + model.points.length + " total pixels.");
         } catch (Exception e) {
             PApplet.println("Failure while loading model configuration from file.");
@@ -179,26 +174,6 @@ public class MantisCode extends PApplet implements LXOscListener {
         lx.engine.framesPerSecond.setValue(60.1);
         
         model.computeNormalsMantis();
-
-        //Comment out for production.  This interferes with file open/save
-        //For development, initialize to desired pattern.
-        /*
-        ((LXChannel)lx.engine.getChannel(0))
-            .addPattern(new RainbowAmplitudePattern(lx))
-            .addPattern(new RainbowShiftPattern(lx))
-            .addPattern(new DashesPattern(lx))
-            .addPattern(new VUMeterPattern(lx))
-            .addPattern(new StrobePattern(lx))
-            .addPattern(new RisingSquaresPattern(lx))
-            .addPattern(new HorizontalSquaresPattern(lx))
-            .addPattern(new AudioMantisPattern(lx))
-            .addPattern(new SolidColorMantisPattern(lx))
-            .addPattern(new PulsePattern(lx))
-            .focusedPattern.setValue(1);
-        ((LXChannel)lx.engine.getChannel(0)).goNext();
-        lx.engine.audio.enabled.setValue(true);
-        lx.engine.audio.meter.gain.setValue(18);
-        */
         
         if (OSC_ENABLED) {
             // Enable OSC transmit and receive.

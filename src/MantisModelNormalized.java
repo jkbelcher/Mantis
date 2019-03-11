@@ -5,29 +5,29 @@ import heronarts.lx.model.LXFixture;
 
 /**
  * This is a virtual wrapper around the PeacockModel
- * which allows interchanging of a target TailPixelGroup
+ * which allows interchanging of a target PuppetPixelGroup
  * without affecting the calling class.
  */
 public class MantisModelNormalized {
 
     public final MantisModel model;
     
-    private final List<TailPixelGroup> tailPixelGroups;    
+    private final List<PuppetPixelGroup> puppetPixelGroups;    
     private int index;    
-    private TailPixelGroup group;
+    private PuppetPixelGroup group;
     
     public MantisModelNormalized(MantisModel model)
     {
-        this(model, new TailPixelGroup[] { model.feathersLR, model.panelsLR, model.spiralsCW_IO, model.spiralsCCW_IO });
+        this(model, new PuppetPixelGroup[] { model.feathersLR, model.panelsLR, model.spiralsCW_IO, model.spiralsCCW_IO });
     }
 
-    public MantisModelNormalized(MantisModel model, TailPixelGroup[] groups) {
+    public MantisModelNormalized(MantisModel model, PuppetPixelGroup[] groups) {
         this.model = model;
         
-        tailPixelGroups = new ArrayList<TailPixelGroup>();
-        for (TailPixelGroup group : groups) {
+        puppetPixelGroups = new ArrayList<PuppetPixelGroup>();
+        for (PuppetPixelGroup group : groups) {
             if (group.size() > 0)
-                tailPixelGroups.add(group);
+                puppetPixelGroups.add(group);
         }
         
         setIndex(0);
@@ -38,24 +38,24 @@ public class MantisModelNormalized {
     }
     
     public MantisModelNormalized setIndex(int index) {
-        if (index < this.tailPixelGroups.size()) {
+        if (index < this.puppetPixelGroups.size()) {
             this.index = index;
-            this.group = this.tailPixelGroups.get(index);
+            this.group = this.puppetPixelGroups.get(index);
         }
         return this;
     }
     
-    public TailPixelGroup getTailPixelGroup() {
+    public PuppetPixelGroup getPuppetPixelGroup() {
         return this.group;
     }
     
-    public Object[] getTailPixelGroupArray() {
+    public Object[] getPuppetPixelGroupArray() {
         //_fixtures.toArray(new LXFixture[_fixtures.size()])
-        return this.tailPixelGroups.toArray();
+        return this.puppetPixelGroups.toArray();
     }
     
-    public MantisModelNormalized setTailPixelGroup(TailPixelGroup newGroup) {
-        int newIndex = tailPixelGroups.indexOf(newGroup);
+    public MantisModelNormalized setPuppetPixelGroup(PuppetPixelGroup newGroup) {
+        int newIndex = puppetPixelGroups.indexOf(newGroup);
         
         if (newIndex > -1) {
             this.index = newIndex;
@@ -65,17 +65,17 @@ public class MantisModelNormalized {
         return this;
     }
     
-    public int numberTailPixelGroups() {
-        return this.tailPixelGroups.size();
+    public int numberPuppetPixelGroups() {
+        return this.puppetPixelGroups.size();
     }
 
     public MantisModelNormalized goNext() {
-        this.setIndex((index+1)%this.tailPixelGroups.size());
+        this.setIndex((index+1)%this.puppetPixelGroups.size());
         return this;
     }
     
     public MantisModelNormalized goRandom() {
-        this.setIndex((int)(Math.random()*this.tailPixelGroups.size()));
+        this.setIndex((int)(Math.random()*this.puppetPixelGroups.size()));
         return this;
     }
     
