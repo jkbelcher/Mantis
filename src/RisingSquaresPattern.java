@@ -6,7 +6,7 @@ import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 
-public class RisingSquaresPattern extends PeacockPattern {
+public class RisingSquaresPattern extends MantisPattern {
 
     public final DiscreteParameter numSquares = 
             new DiscreteParameter("Count", 30, 1, 100)

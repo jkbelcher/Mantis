@@ -8,7 +8,7 @@ import heronarts.lx.parameter.CompoundParameter;
 /* Bubbles.
  * This pattern Copyright(c)2018 Justin Belcher, use with permission only.
  */
-public class BubblesPattern extends PeacockPatternNormalized {
+public class BubblesPattern extends MantisPatternNormalized {
 
     public final CompoundParameter density = 
             new CompoundParameter("Density", .2, 0, 1)

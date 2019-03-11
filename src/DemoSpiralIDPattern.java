@@ -8,7 +8,7 @@ import heronarts.lx.parameter.LXParameterListener;
 import processing.core.PApplet;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
-public class DemoSpiralIDPattern extends PeacockPattern {
+public class DemoSpiralIDPattern extends MantisPattern {
     public final DiscreteParameter spiralID = 
         new DiscreteParameter("SpiralID", 1, 1, 24)
         .setDescription("Spiral ID to light");

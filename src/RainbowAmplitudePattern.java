@@ -6,7 +6,7 @@ import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.audio.LXAudioComponent;
 import heronarts.lx.audio.FourierTransform;
 
-public class RainbowAmplitudePattern extends PeacockPattern {
+public class RainbowAmplitudePattern extends MantisPattern {
 
     public final BooleanParameter lrSplit =
         new BooleanParameter("L/R Split", false)

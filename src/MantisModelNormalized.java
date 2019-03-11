@@ -8,20 +8,20 @@ import heronarts.lx.model.LXFixture;
  * which allows interchanging of a target TailPixelGroup
  * without affecting the calling class.
  */
-public class PeacockModelNormalized {
+public class MantisModelNormalized {
 
-    public final PeacockModel model;
+    public final MantisModel model;
     
     private final List<TailPixelGroup> tailPixelGroups;    
     private int index;    
     private TailPixelGroup group;
     
-    public PeacockModelNormalized(PeacockModel model)
+    public MantisModelNormalized(MantisModel model)
     {
         this(model, new TailPixelGroup[] { model.feathersLR, model.panelsLR, model.spiralsCW_IO, model.spiralsCCW_IO });
     }
 
-    public PeacockModelNormalized(PeacockModel model, TailPixelGroup[] groups) {
+    public MantisModelNormalized(MantisModel model, TailPixelGroup[] groups) {
         this.model = model;
         
         tailPixelGroups = new ArrayList<TailPixelGroup>();
@@ -37,7 +37,7 @@ public class PeacockModelNormalized {
         return this.index;
     }
     
-    public PeacockModelNormalized setIndex(int index) {
+    public MantisModelNormalized setIndex(int index) {
         if (index < this.tailPixelGroups.size()) {
             this.index = index;
             this.group = this.tailPixelGroups.get(index);
@@ -54,7 +54,7 @@ public class PeacockModelNormalized {
         return this.tailPixelGroups.toArray();
     }
     
-    public PeacockModelNormalized setTailPixelGroup(TailPixelGroup newGroup) {
+    public MantisModelNormalized setTailPixelGroup(TailPixelGroup newGroup) {
         int newIndex = tailPixelGroups.indexOf(newGroup);
         
         if (newIndex > -1) {
@@ -69,12 +69,12 @@ public class PeacockModelNormalized {
         return this.tailPixelGroups.size();
     }
 
-    public PeacockModelNormalized goNext() {
+    public MantisModelNormalized goNext() {
         this.setIndex((index+1)%this.tailPixelGroups.size());
         return this;
     }
     
-    public PeacockModelNormalized goRandom() {
+    public MantisModelNormalized goRandom() {
         this.setIndex((int)(Math.random()*this.tailPixelGroups.size()));
         return this;
     }

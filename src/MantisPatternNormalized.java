@@ -4,9 +4,9 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
-public abstract class PeacockPatternNormalized extends PeacockPattern {
+public abstract class MantisPatternNormalized extends MantisPattern {
 
-    public final PeacockModelNormalized modelN;
+    public final MantisModelNormalized modelN;
     
     public final BooleanParameter randGroup = 
             new BooleanParameter("RandGroup", true)
@@ -18,10 +18,10 @@ public abstract class PeacockPatternNormalized extends PeacockPattern {
             .setDescription("Change the pattern to target the next TailPixelGroup")
             .setMode(Mode.MOMENTARY);
 
-    public PeacockPatternNormalized(LX lx) {
+    public MantisPatternNormalized(LX lx) {
         super(lx);
         
-        this.modelN = new PeacockModelNormalized(model);
+        this.modelN = new MantisModelNormalized(model);
         
         addParameter(randGroup);
         addParameter(nextGroup);
@@ -34,10 +34,10 @@ public abstract class PeacockPatternNormalized extends PeacockPattern {
             });
     }
 
-    public PeacockPatternNormalized(LX lx, TailPixelGroup[] groups) {
+    public MantisPatternNormalized(LX lx, TailPixelGroup[] groups) {
         super(lx);
         
-        this.modelN = new PeacockModelNormalized(model, groups);
+        this.modelN = new MantisModelNormalized(model, groups);
 
         addParameter(randGroup);
         addParameter(nextGroup);
@@ -50,7 +50,7 @@ public abstract class PeacockPatternNormalized extends PeacockPattern {
             });
     }
     
-    public PeacockPatternNormalized(LX lx, PeacockModelNormalized modelN) {
+    public MantisPatternNormalized(LX lx, MantisModelNormalized modelN) {
         super(lx);
         
         this.modelN = modelN;

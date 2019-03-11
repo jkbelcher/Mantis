@@ -2,7 +2,7 @@ import heronarts.lx.LX;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 
-public class RainbowShiftPattern extends PeacockPatternNormalized {
+public class RainbowShiftPattern extends MantisPatternNormalized {
 
     private static final float RADIANS_PER_REVOLUTION = 2.0f;
 

@@ -1,6 +1,6 @@
-# Peacock
+# Mantis
 
-This is the lighting control software for Colossal Collective's Peacock puppet.
+This is the lighting control software for Colossal Collective's Mantis puppet.
 
 For more information please visit:
 https://www.thecolossalcollective.com/
@@ -8,9 +8,9 @@ https://www.thecolossalcollective.com/
 
 ## Install the toolchain
 
-1. Install latest Java 8 Runtime Environment (currently 8u162)
+1. Install latest Java 8 Runtime Environment (currently 8u202)
 
-2. Install Java Development Kit (8u162)
+2. Install Java Development Kit (8u202)
 
 3. Install Eclipse (for Java developers)
 
@@ -28,13 +28,13 @@ https://marketplace.eclipse.org/content/editorconfig-eclipse
 
 cd C:/Users/username/eclipseworkspace
 
-git clone https://github.com/jkbelcher/Peacock
+git clone https://github.com/jkbelcher/Mantis
 
 
 ## Import the project into eclipse
 
 File > Open Projects from Filesystem
 
-Set the Import Source to the local folder containing the project (ex: C:/Users/username/eclipseworkspace/Peacock)
+Set the Import Source to the local folder containing the project (ex: C:/Users/username/eclipseworkspace/Mantis)
 
 Click [Finish]

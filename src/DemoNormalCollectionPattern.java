@@ -7,9 +7,9 @@ import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
 // We can change the target collection in this pattern for testing
-public class DemoNormalCollectionPattern extends PeacockPattern {
+public class DemoNormalCollectionPattern extends MantisPattern {
 
-    public final PeacockModelNormalized modelN;
+    public final MantisModelNormalized modelN;
     
     public final BooleanParameter nextGroup = 
             new BooleanParameter("NextGroup")
@@ -25,7 +25,7 @@ public class DemoNormalCollectionPattern extends PeacockPattern {
     public DemoNormalCollectionPattern(LX lx) {
         super(lx);
         
-        this.modelN = new PeacockModelNormalized(model);
+        this.modelN = new MantisModelNormalized(model);
         this.modelN.setTailPixelGroup(model.spiralsCW_IO);
 
         addParameter(nextGroup);

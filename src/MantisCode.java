@@ -25,7 +25,7 @@ import processing.core.PApplet;
 import processing.event.KeyEvent;
 
 
-public class PeacockCode extends PApplet implements LXOscListener {
+public class MantisCode extends PApplet implements LXOscListener {
 
     // Enable OSC?
     public final static boolean OSC_ENABLED = false;
@@ -52,10 +52,10 @@ public class PeacockCode extends PApplet implements LXOscListener {
     public final static float INCHES = 1;
     public final static float FEET = 12*INCHES;
 
-    public static PeacockCode applet;
+    public static MantisCode applet;
 
     // Top-level, we have a model and an LXStudio instance
-    PeacockModel model;
+    MantisModel model;
     LXStudio lx;
 
     //For "help" mode which helps define mapped/unmapped pixels
@@ -63,8 +63,8 @@ public class PeacockCode extends PApplet implements LXOscListener {
     public static final List<StreamingACNDatagram> datagrams = new ArrayList<StreamingACNDatagram>();
 
     public static void main(String[] args) {
-        //		PApplet.main("PeacockCode");
-        PApplet.main(new String[] { "--present", PeacockCode.class.getName() });
+        //		PApplet.main("MantisCode");
+        PApplet.main(new String[] { "--present", MantisCode.class.getName() });
     }
 
     public void settings(){
@@ -81,7 +81,7 @@ public class PeacockCode extends PApplet implements LXOscListener {
         // before the UI is constructed
         
         //Make patterns available in the browser
-        lx.registerPattern(SolidColorPeacockPattern.class);
+        lx.registerPattern(SolidColorMantisPattern.class);
         lx.registerPattern(DashesPattern.class);
         lx.registerPattern(RainbowShiftPattern.class);
         lx.registerPattern(VUMeterPattern.class);
@@ -104,12 +104,12 @@ public class PeacockCode extends PApplet implements LXOscListener {
         lx.registerEffect(heronarts.lx.effect.StrobeEffect.class);                
 
         //Cast the model to access model-specific properties from within this overridden initialize() function.
-        PeacockModel m = (PeacockModel)model;
+        MantisModel m = (MantisModel)model;
         
         try {
             //Create a UDP datagram for each output universe.
             //Currently these are 1:1 with controller channels.
-            for (PeacockFixture fixture : m.allPeacockFixtures) {
+            for (MantisFixture fixture : m.allMantisFixtures) {
                 int universe = fixture.channel;
                 if (universe > 0) {
                     int[] indicesForDatagram = fixture.getPointIndicesForOutput();                   
@@ -145,7 +145,7 @@ public class PeacockCode extends PApplet implements LXOscListener {
 
 
     public void setup(){
-        PeacockCode.applet = this;
+        MantisCode.applet = this;
 
         //Monitor key events for Ctrl+Q = Quit, Ctrl+H = Help, etc.
         registerMethod("keyEvent", this);
@@ -154,12 +154,12 @@ public class PeacockCode extends PApplet implements LXOscListener {
         println("Loading config from file...");
         try {
             // ****************************************************
-            // TO CHANGE PEACOCKS UNCOMMENT THE CORRECT LINE BELOW:
-            //model = PeacockModel.LoadConfigurationFromFile("./config/controllers.csv", "./config/big_peacock.csv");  //Big Peacock
-            model = PeacockModel.LoadConfigurationFromFile("./config/controllers.csv", "./config/small_peacock.csv");  //Small Peacock
+            // TO CHANGE PUPPETS UNCOMMENT THE CORRECT LINE BELOW:
+            //model = MantisModel.LoadConfigurationFromFile("./config/controllers.csv", "./config/big_mantis.csv");  //Big Mantis
+            model = MantisModel.LoadConfigurationFromFile("./config/controllers.csv", "./config/small_mantis.csv");  //Small Mantis
             PApplet.println("Loaded"
                     ,model.controllers.size() + " controllers,"
-                    ,model.allPeacockFixtures.size() + " fixtures,"
+                    ,model.allMantisFixtures.size() + " fixtures,"
                     ,model.tailPixels.size() + " tailPixels,"
                     ,"and " + model.points.length + " total pixels.");
         } catch (Exception e) {
@@ -178,7 +178,7 @@ public class PeacockCode extends PApplet implements LXOscListener {
         lx.engine.isNetworkMultithreaded.setValue(true);
         lx.engine.framesPerSecond.setValue(60.1);
         
-        model.computeNormalsPeacock();
+        model.computeNormalsMantis();
 
         //Comment out for production.  This interferes with file open/save
         //For development, initialize to desired pattern.
@@ -191,8 +191,8 @@ public class PeacockCode extends PApplet implements LXOscListener {
             .addPattern(new StrobePattern(lx))
             .addPattern(new RisingSquaresPattern(lx))
             .addPattern(new HorizontalSquaresPattern(lx))
-            .addPattern(new AudioPeacockPattern(lx))
-            .addPattern(new SolidColorPeacockPattern(lx))
+            .addPattern(new AudioMantisPattern(lx))
+            .addPattern(new SolidColorMantisPattern(lx))
             .addPattern(new PulsePattern(lx))
             .focusedPattern.setValue(1);
         ((LXChannel)lx.engine.getChannel(0)).goNext();
@@ -507,7 +507,7 @@ public class PeacockCode extends PApplet implements LXOscListener {
     }
 
     void setHelpModeOn() {
-        /*for (LEDScapeDatagram output : PeacockCode.datagrams) {
+        /*for (LEDScapeDatagram output : MantisCode.datagrams) {
           output.setBackgroundColor(LXColor.RED);
         }
         */
@@ -517,7 +517,7 @@ public class PeacockCode extends PApplet implements LXOscListener {
 
     void setHelpModeOff() {
         /*
-           for (LEDScapeDatagram output : PeacockCode.datagrams) {
+           for (LEDScapeDatagram output : MantisCode.datagrams) {
            output.setBackgroundColor(LXColor.BLACK);
            }
            */

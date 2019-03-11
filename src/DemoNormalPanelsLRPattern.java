@@ -2,7 +2,7 @@ import heronarts.lx.LX;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 
-public class DemoNormalPanelsLRPattern extends PeacockPattern {
+public class DemoNormalPanelsLRPattern extends MantisPattern {
 
     public final CompoundParameter position = 
             new CompoundParameter("Position", 0, 0, 1)

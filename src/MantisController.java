@@ -5,28 +5,28 @@ import java.util.TreeMap;
 import heronarts.lx.model.LXAbstractFixture;
 import processing.core.PApplet;
 
-public class PeacockController extends LXAbstractFixture {
+public class MantisController extends LXAbstractFixture {
 
     public final ControllerParameters params;
-    public final List<PeacockFixture> fixtures;
-    public final TreeMap<Integer,PeacockFixture> fixturesDict;
+    public final List<MantisFixture> fixtures;
+    public final TreeMap<Integer,MantisFixture> fixturesDict;
 
-    public PeacockController(ControllerParameters params) {
+    public MantisController(ControllerParameters params) {
         this.params = params;
-        this.fixtures = new ArrayList<PeacockFixture>();
-        this.fixturesDict = new TreeMap<Integer,PeacockFixture>();
+        this.fixtures = new ArrayList<MantisFixture>();
+        this.fixturesDict = new TreeMap<Integer,MantisFixture>();
         
         PApplet.println("Controller "+this.params.id+": "+this.params.ipAddress+":"+this.params.port);
     }
     
-    public PeacockController addFixture(PeacockFixture fixture) {
+    public MantisController addFixture(MantisFixture fixture) {
         this.fixtures.add(fixture);
         this.fixturesDict.put(fixture.channel, fixture);
         
         return this;
     }
     
-    public PeacockFixture getFixture(int key) {
+    public MantisFixture getFixture(int key) {
         return this.fixturesDict.get(key);
     }
     

@@ -9,20 +9,20 @@ import processing.core.PApplet;
 
 //For the Peacock each channel is a fixture.
 //Both Panels and Feathers are fixtures/channels.
-public class PeacockFixture extends LXAbstractFixtureMapped implements Comparable<PeacockFixture> {
+public class MantisFixture extends LXAbstractFixtureMapped implements Comparable<MantisFixture> {
 
     public final int channel;
-    public final PeacockController controller;
+    public final MantisController controller;
     public final List<TailPixel> tailPixels = new ArrayList<TailPixel>();
     
-    public PeacockFixture(int channel, PeacockController controller) {
+    public MantisFixture(int channel, MantisController controller) {
         this.channel = channel;
         this.controller = controller;
         //PApplet.println("Fixture "+this.channel);
     }
     
     @Override
-    public int compareTo(PeacockFixture o) {
+    public int compareTo(MantisFixture o) {
         int compareChannel = o.channel;
         return compareChannel - this.channel;
     }

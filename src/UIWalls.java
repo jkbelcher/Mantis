@@ -11,7 +11,7 @@ import processing.core.PGraphics;
 public class UIWalls extends UI3dComponent {
 
     private final LXModel model;
-    private final float WALL_MARGIN = 2*PeacockCode.FEET;
+    private final float WALL_MARGIN = 2*MantisCode.FEET;
     //  private final float WALL_SIZE = model.xRange + 2*WALL_MARGIN;
     //private final float WALL_THICKNESS = 1*JouleCode.INCHES;
     private float WALL_SIZE;// = model.xRange + 2*WALL_MARGIN;
@@ -22,7 +22,7 @@ public class UIWalls extends UI3dComponent {
         super();
         model=tModel;
         WALL_SIZE = model.xRange + 2*WALL_MARGIN;
-        WALL_THICKNESS = 1*PeacockCode.INCHES;
+        WALL_THICKNESS = 1*MantisCode.INCHES;
     }
 
     @Override

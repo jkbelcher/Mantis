@@ -3,7 +3,7 @@ import heronarts.lx.color.LXColor;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.CompoundParameter;
 
-public class SolidColorPeacockPattern extends PeacockPatternNormalized {
+public class SolidColorMantisPattern extends MantisPatternNormalized {
 
     public final CompoundParameter hue =
         new CompoundParameter("Hue", LXColor.h(LXColor.RED), 0, 360)
@@ -12,13 +12,13 @@ public class SolidColorPeacockPattern extends PeacockPatternNormalized {
         new CompoundParameter("Brightness", 100, 0, 100)
         .setDescription("Brightness");
 
-    public SolidColorPeacockPattern(LX lx) {
+    public SolidColorMantisPattern(LX lx) {
         super(lx, new TailPixelGroup[] { 
-                ((PeacockModel)(lx.model)).feathersLR,
-                ((PeacockModel)(lx.model)).panelsLR,
-                ((PeacockModel)(lx.model)).body,
-                ((PeacockModel)(lx.model)).neck,
-                ((PeacockModel)(lx.model)).eyes
+                ((MantisModel)(lx.model)).feathersLR,
+                ((MantisModel)(lx.model)).panelsLR,
+                ((MantisModel)(lx.model)).body,
+                ((MantisModel)(lx.model)).neck,
+                ((MantisModel)(lx.model)).eyes
                 });
 
         addParameter(hue);

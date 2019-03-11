@@ -11,7 +11,7 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
-public class VUMeterPattern extends PeacockPattern {
+public class VUMeterPattern extends MantisPattern {
 
     /////////////////////////////////////////////////
     // Pass-through parameters for two GraphicMeters

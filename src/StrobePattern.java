@@ -7,7 +7,7 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
-public class StrobePattern extends PeacockPatternNormalized {
+public class StrobePattern extends MantisPatternNormalized {
 
     public final BooleanParameter strobe = 
             new BooleanParameter("Strobe")
@@ -29,7 +29,7 @@ public class StrobePattern extends PeacockPatternNormalized {
     public int strobeColor = LXColor.WHITE;
 
     public StrobePattern(LX lx)  {
-        this(lx, new TailPixelGroup[] { PeacockCode.applet.model.feathersLR });
+        this(lx, new TailPixelGroup[] { MantisCode.applet.model.feathersLR });
     }
 
     public StrobePattern(LX lx, TailPixelGroup[] groups) {

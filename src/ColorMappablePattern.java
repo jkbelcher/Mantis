@@ -3,7 +3,7 @@ import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 
-public class ColorMappablePattern extends PeacockPatternNormalized {
+public class ColorMappablePattern extends MantisPatternNormalized {
 
     public final DiscreteParameter red = 
             new DiscreteParameter("Red", 0, 0, 255)
@@ -22,7 +22,7 @@ public class ColorMappablePattern extends PeacockPatternNormalized {
             .setDescription("Brightness");
     
     public ColorMappablePattern(LX lx) {
-        this(lx, new TailPixelGroup[] { PeacockCode.applet.model.feathersLR });
+        this(lx, new TailPixelGroup[] { MantisCode.applet.model.feathersLR });
     }
 
     public ColorMappablePattern(LX lx, TailPixelGroup[] groups) {
@@ -34,7 +34,7 @@ public class ColorMappablePattern extends PeacockPatternNormalized {
         addParameter(brightness);        
     }
 
-    public ColorMappablePattern(LX lx, PeacockModelNormalized modelN) {
+    public ColorMappablePattern(LX lx, MantisModelNormalized modelN) {
         super(lx, modelN);
         // TODO Auto-generated constructor stub
     }

@@ -5,7 +5,7 @@ import heronarts.lx.parameter.DiscreteParameter;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 import processing.core.PApplet;
 
-public class DemoChannelPattern extends PeacockPattern {
+public class DemoChannelPattern extends MantisPattern {
 
     public final DiscreteParameter channel = 
         new DiscreteParameter("Channel", 1, 1, 32)
@@ -41,7 +41,7 @@ public class DemoChannelPattern extends PeacockPattern {
             PApplet.println("Channel: " + channel + "  Index: " + index);
         }
 
-        for (PeacockFixture fixture : model.allPeacockFixtures) {
+        for (MantisFixture fixture : model.allMantisFixtures) {
             if (fixture.channel == channel)
             {
                 for (TailPixel tp : fixture.tailPixels) {

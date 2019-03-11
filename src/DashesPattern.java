@@ -7,7 +7,7 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
-public class DashesPattern extends PeacockPatternNormalized {
+public class DashesPattern extends MantisPatternNormalized {
 
     public final CompoundParameter hue = 
             new CompoundParameter("Hue", LXColor.h(LXColor.RED), 0, 360)

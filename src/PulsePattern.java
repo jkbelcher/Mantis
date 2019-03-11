@@ -3,7 +3,7 @@ import heronarts.lx.color.LXColor;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.CompoundParameter;
 
-public class PulsePattern extends PeacockPattern {
+public class PulsePattern extends MantisPattern {
 
     public final CompoundParameter speed =
         new CompoundParameter("Speed", 1f, 0f, 10f)

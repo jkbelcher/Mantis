@@ -18,14 +18,14 @@ import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
 
 /**
- * This model represents the entire Peacock puppet.
+ * This model represents the entire Mantis puppet.
  * It contains lists of the logical lighted components on the puppet.
  */
-public class PeacockModel extends LXModel {
+public class MantisModel extends LXModel {
 
-    public final List<PeacockFixture> allPeacockFixtures;   //One fixture for each controller channel.  Panels and Feathers are fixtures.
+    public final List<MantisFixture> allMantisFixtures;   //One fixture for each controller channel.  Panels and Feathers are fixtures.
     
-    public final List<PeacockController> controllers;
+    public final List<MantisController> controllers;
     public final List<TailPixel> tailPixels;
     
     //Logical groupings of pixels
@@ -49,16 +49,16 @@ public class PeacockModel extends LXModel {
     //Head Eye pixels
     //TO-DO: Add [head] eye pixels here.  They will load from a different .csv file    
        
-    public PeacockModel(LXFixture[] allFixtures, List<PeacockFixture> allPeacockFixtures, List<PeacockController> controllers, List<TailPixel> tailPixels) {
+    public MantisModel(LXFixture[] allFixtures, List<MantisFixture> allMantisFixtures, List<MantisController> controllers, List<TailPixel> tailPixels) {
         super(allFixtures);
 
-        this.allPeacockFixtures = allPeacockFixtures;
+        this.allMantisFixtures = allMantisFixtures;
         this.controllers = controllers;
         this.tailPixels = tailPixels;
         
         //Sort TailPixels within each collection
-        Collections.sort(this.allPeacockFixtures);
-        for (PeacockFixture fixture : this.allPeacockFixtures) {
+        Collections.sort(this.allMantisFixtures);
+        for (MantisFixture fixture : this.allMantisFixtures) {
             fixture.setLoaded();
         }
         
@@ -151,7 +151,7 @@ public class PeacockModel extends LXModel {
 
     }
     
-    protected PeacockModel computeNormalsPeacock() {
+    protected MantisModel computeNormalsMantis() {
         //Positions are computed here, after the model is built and calculateNormals() has been called on it.
         //This is in case a collection wants to sort itself using a normalized value.
 
@@ -200,19 +200,19 @@ public class PeacockModel extends LXModel {
     //For CSV files:
     static public final String subSeparator = ";";
 
-    public static PeacockModel LoadConfigurationFromFile(String controllerFile, String pixelFile) throws Exception
+    public static MantisModel LoadConfigurationFromFile(String controllerFile, String pixelFile) throws Exception
     {
-        final List<PeacockFixture> allPeacockFixtures = new ArrayList<PeacockFixture>();
-        final List<PeacockController> controllers = new ArrayList<PeacockController>();
+        final List<MantisFixture> allMantisFixtures = new ArrayList<MantisFixture>();
+        final List<MantisController> controllers = new ArrayList<MantisController>();
         final List<TailPixel> tailPixels = new ArrayList<TailPixel>();
 
         //We use dictionaries to pair objects during the loading process
-        final TreeMap<Integer,PeacockController> controllersDict = new TreeMap<Integer,PeacockController>();
+        final TreeMap<Integer,MantisController> controllersDict = new TreeMap<Integer,MantisController>();
 
         //Controllers
         List<ControllerParameters> cP = ReadControllersFromFile(controllerFile);
         for (ControllerParameters p : cP) {
-            PeacockController newController = new PeacockController(p);
+            MantisController newController = new MantisController(p);
             controllers.add(newController);
             controllersDict.put(p.id, newController);
         }
@@ -223,14 +223,14 @@ public class PeacockModel extends LXModel {
             TailPixel newTailPixel = new TailPixel(p);
             tailPixels.add(newTailPixel);
 
-            PeacockController controller = controllersDict.get(p.controllerID);
+            MantisController controller = controllersDict.get(p.controllerID);
 
             //Create the containing fixture if it does not exist.
-            PeacockFixture fixture;
+            MantisFixture fixture;
             if (!controller.containsFixture(p.controllerChannel)) {
-                fixture = new PeacockFixture(p.controllerChannel, controller);
+                fixture = new MantisFixture(p.controllerChannel, controller);
                 controller.addFixture(fixture);
-                allPeacockFixtures.add(fixture);
+                allMantisFixtures.add(fixture);
             } else {
                 fixture = controller.getFixture(p.controllerChannel);
             }
@@ -241,9 +241,9 @@ public class PeacockModel extends LXModel {
         }
 
         //LX wants a list of fixtures that as a whole contains one instance of each LXPoint.
-        List<LXFixture> _fixtures = new ArrayList<LXFixture>(allPeacockFixtures);
+        List<LXFixture> _fixtures = new ArrayList<LXFixture>(allMantisFixtures);
 
-        return new PeacockModel(_fixtures.toArray(new LXFixture[_fixtures.size()]), allPeacockFixtures, controllers, tailPixels);
+        return new MantisModel(_fixtures.toArray(new LXFixture[_fixtures.size()]), allMantisFixtures, controllers, tailPixels);
     }
 
     private static CellProcessor[] getControllerCsvProcessors() {
