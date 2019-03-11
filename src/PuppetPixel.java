@@ -5,8 +5,8 @@ public class PuppetPixel extends LXAbstractFixtureMapped implements Comparable<P
 
     public final PuppetPixelParameters params;
     public final LXPoint p;
-    public final int feather;
-    public final int panel;
+    //public final int feather;
+    //public final int panel;
 
     public PuppetPixel(PuppetPixelParameters params) {
         this.params = params;
@@ -16,8 +16,8 @@ public class PuppetPixel extends LXAbstractFixtureMapped implements Comparable<P
         LXPoint lxPoint = new LXPoint(params.x, params.y, params.z);
         this.p = lxPoint;
         
-        this.feather = this.params.feather;
-        this.panel = this.params.panel;
+        //this.feather = this.params.feather;
+        //this.panel = this.params.panel;
     }
 
     @Override
@@ -27,23 +27,28 @@ public class PuppetPixel extends LXAbstractFixtureMapped implements Comparable<P
     }
     
     public Boolean isFeatherPixel() {
-        return this.feather > 0;        
+        //return this.feather > 0;
+        return false;
     }
     
     public Boolean isPanelPixel() {
-        return this.panel > 0;
+        //return this.panel > 0;
+        return false;
     }
     
     public Boolean isBodyPixel() {
-        return this.panel==0 && this.feather==0 && this.params.controllerChannel == 13;
+        //return this.panel==0 && this.feather==0 && this.params.channel == 13;
+        return false;
     }
 
     public Boolean isNeckPixel() {
-        return this.panel==0 && this.feather==0 && this.params.controllerChannel == 14;
+        //return this.panel==0 && this.feather==0 && this.params.channel == 14;
+        return false;
     }
 
     public Boolean isEyePixel() {
-        return this.panel==0 && this.feather==0 && this.params.controllerChannel == 30;
+        //return this.panel==0 && this.feather==0 && this.params.channel == 30;
+        return false;
     }
 
 }

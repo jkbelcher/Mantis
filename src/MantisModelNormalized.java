@@ -18,7 +18,8 @@ public class MantisModelNormalized {
     
     public MantisModelNormalized(MantisModel model)
     {
-        this(model, new PuppetPixelGroup[] { model.feathersLR, model.panelsLR, model.spiralsCW_IO, model.spiralsCCW_IO });
+        //this(model, new PuppetPixelGroup[] { model.feathersLR, model.panelsLR, model.spiralsCW_IO, model.spiralsCCW_IO });
+        this(model, new PuppetPixelGroup[] { });
     }
 
     public MantisModelNormalized(MantisModel model, PuppetPixelGroup[] groups) {

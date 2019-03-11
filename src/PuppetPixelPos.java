@@ -44,19 +44,11 @@ public class PuppetPixelPos {
     }
 	
 	public int getPanel() {
-	    return this.pixel.params.panel;
+	    return this.pixel.params.bodyPart;
 	}
 	
 	public int getFeather() {
-	    return this.pixel.params.feather;
-	}
-	
-	public int getRung() {
-	    return this.pixel.params.rung;
-	}
-	
-	public int getSpiral() {
-	    return this.pixel.params.spiral;
+	    return this.pixel.params.rightLeft;
 	}
 	
 	public int getPosition() {

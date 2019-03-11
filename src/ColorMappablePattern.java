@@ -1,9 +1,10 @@
 import heronarts.lx.LX;
 import heronarts.lx.color.LXColor;
+import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 
-public class ColorMappablePattern extends MantisPatternNormalized {
+public class ColorMappablePattern extends MantisPattern {
 
     public final DiscreteParameter red = 
             new DiscreteParameter("Red", 0, 0, 255)
@@ -22,21 +23,12 @@ public class ColorMappablePattern extends MantisPatternNormalized {
             .setDescription("Brightness");
     
     public ColorMappablePattern(LX lx) {
-        this(lx, new PuppetPixelGroup[] { MantisCode.applet.model.feathersLR });
-    }
-
-    public ColorMappablePattern(LX lx, PuppetPixelGroup[] groups) {
-        super(lx, groups);
-
+        super(lx);
+        
         addParameter(red);
         addParameter(green);
         addParameter(blue);
         addParameter(brightness);        
-    }
-
-    public ColorMappablePattern(LX lx, MantisModelNormalized modelN) {
-        super(lx, modelN);
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -49,14 +41,10 @@ public class ColorMappablePattern extends MantisPatternNormalized {
         float brightness = this.brightness.getValuef();
         
         int c = LXColor.scaleBrightness(LXColor.rgb(red, green, blue), brightness);
-        
-        PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
-        
-        for (int i = 0; i < puppetPixelGroup.size(); i++) {
-            PuppetPixelPos ppp = puppetPixelGroup.puppetPixels.get(i);
-            colors[ppp.getIndexColor()] = c;
-        }
 
+        for (LXPoint p : this.model.getPoints()) {
+            colors[p.index] = c;
+        }
     }
 
 }

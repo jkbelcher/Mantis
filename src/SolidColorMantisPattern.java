@@ -1,9 +1,11 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.CompoundParameter;
 
-public class SolidColorMantisPattern extends MantisPatternNormalized {
+@LXCategory("Colossal Collective")
+public class SolidColorMantisPattern extends MantisPattern {
 
     public final CompoundParameter hue =
         new CompoundParameter("Hue", LXColor.h(LXColor.RED), 0, 360)
@@ -13,13 +15,7 @@ public class SolidColorMantisPattern extends MantisPatternNormalized {
         .setDescription("Brightness");
 
     public SolidColorMantisPattern(LX lx) {
-        super(lx, new PuppetPixelGroup[] { 
-                ((MantisModel)(lx.model)).feathersLR,
-                ((MantisModel)(lx.model)).panelsLR,
-                ((MantisModel)(lx.model)).body,
-                ((MantisModel)(lx.model)).neck,
-                ((MantisModel)(lx.model)).eyes
-                });
+        super(lx);
 
         addParameter(hue);
         addParameter(brightness);
@@ -40,8 +36,8 @@ public class SolidColorMantisPattern extends MantisPatternNormalized {
 
         int color = LXColor.hsb(hue, 100, brightness);
 
-        for (PuppetPixelPos p : this.modelN.getPuppetPixelGroup().puppetPixels) {
-            colors[p.getIndexColor()] = color;
+        for (LXPoint p : this.model.getPoints()) {
+            colors[p.index] = color;
         }
     }
 

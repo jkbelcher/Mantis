@@ -23,11 +23,13 @@ import heronarts.lx.model.LXModel;
  */
 public class MantisModel extends LXModel {
 
-    public final List<MantisFixture> allMantisFixtures;   //One fixture for each controller channel.  Panels and Feathers are fixtures.
-    
+    public final List<MantisFixture> allMantisFixtures;   //One fixture for each controller channel.  Each body part is a fixture.
     public final List<MantisController> controllers;
     public final List<PuppetPixel> puppetPixels;
     
+    public final PuppetPixelGroup allPuppetPixels;
+    public final List<PuppetPixelGroup> allLimbs;
+    /*
     //Logical groupings of pixels
     //Use these maps to find specific components by ID
     public final List<PuppetPixelGroup> feathers;
@@ -43,11 +45,8 @@ public class MantisModel extends LXModel {
     public final PuppetPixelGroup feathersLR;
     public final PuppetPixelGroup panelsLR;
     public final PuppetPixelGroup spiralsCW_IO;
-    public final PuppetPixelGroup spiralsCCW_IO;        
-    //TO-DO: normalized each direction overall spiral
-    
-    //Head Eye pixels
-    //TO-DO: Add [head] eye pixels here.  They will load from a different .csv file    
+    public final PuppetPixelGroup spiralsCCW_IO;  
+    */
        
     public MantisModel(LXFixture[] allFixtures, List<MantisFixture> allMantisFixtures, List<MantisController> controllers, List<PuppetPixel> puppetPixels) {
         super(allFixtures);
@@ -62,6 +61,7 @@ public class MantisModel extends LXModel {
             fixture.setLoaded();
         }
         
+        /*
         //Logical groups
         this.feathers = new ArrayList<PuppetPixelGroup>();
         this.panels = new ArrayList<PuppetPixelGroup>();
@@ -74,11 +74,15 @@ public class MantisModel extends LXModel {
         this.panelsLR = new PuppetPixelGroup();
         this.spiralsCW_IO = new PuppetPixelGroup();
         this.spiralsCCW_IO = new PuppetPixelGroup();
+        */
+        this.allPuppetPixels = new PuppetPixelGroup();
+        this.allLimbs = new ArrayList<PuppetPixelGroup>();
         
         this.initializeSubCollections();
     }
     
     private void initializeSubCollections() {
+        /*
         //Feathers
         for (int i = 1; i <= 13; i++) {
             this.feathers.add(new PuppetPixelGroup(i));            
@@ -147,14 +151,15 @@ public class MantisModel extends LXModel {
             if (p.isPanelPixel() && p.params.spiral % 2 != 0) {                
                 this.spiralsCCW_IO.addPuppetPixelPosition(new PuppetPixelPos(p));
             }
-        }        
+        }       
+        */
 
     }
     
     protected MantisModel computeNormalsMantis() {
         //Positions are computed here, after the model is built and calculateNormals() has been called on it.
         //This is in case a collection wants to sort itself using a normalized value.
-
+/*
         //Feathers
         for (PuppetPixelGroup g : this.feathers) {
             g.puppetPixels.sort((p1,p2) -> Float.compare(p1.getPoint().r, p2.getPoint().r));
@@ -190,7 +195,7 @@ public class MantisModel extends LXModel {
 
         this.spiralsCCW_IO.puppetPixels.sort((p1,p2) -> p1.getSpiral() == p2.getSpiral() ? p2.getPosition() - p1.getPosition() : p2.getSpiral() - p1.getSpiral());
         this.spiralsCCW_IO.copyIndicesToChildren().calculateNormalsByIndex();
-
+*/
     	return this;
     }
 
@@ -210,7 +215,7 @@ public class MantisModel extends LXModel {
         final TreeMap<Integer,MantisController> controllersDict = new TreeMap<Integer,MantisController>();
 
         // Controllers
-        List<ControllerParameters> cP = feadControllersFromFile(controllerFile);
+        List<ControllerParameters> cP = readControllersFromFile(controllerFile);
         for (ControllerParameters p : cP) {
             MantisController newController = new MantisController(p);
             controllers.add(newController);
@@ -227,12 +232,12 @@ public class MantisModel extends LXModel {
 
             //Create the containing fixture if it does not exist.
             MantisFixture fixture;
-            if (!controller.containsFixture(p.controllerChannel)) {
-                fixture = new MantisFixture(p.controllerChannel, controller);
+            if (!controller.containsFixture(p.channel)) {
+                fixture = new MantisFixture(p.channel, controller);
                 controller.addFixture(fixture);
                 allMantisFixtures.add(fixture);
             } else {
-                fixture = controller.getFixture(p.controllerChannel);
+                fixture = controller.getFixture(p.channel);
             }
 
             //Add pixel to containing fixture.
@@ -254,7 +259,7 @@ public class MantisModel extends LXModel {
         };
     }
 
-    protected static List<ControllerParameters> feadControllersFromFile(String filename) throws Exception {
+    protected static List<ControllerParameters> readControllersFromFile(String filename) throws Exception {
 
         final ArrayList<ControllerParameters> results = new ArrayList<ControllerParameters>();
 
@@ -289,11 +294,9 @@ public class MantisModel extends LXModel {
         return new CellProcessor[] {
             new ParseInt(), // int controllerID;
             new ParseInt(), // int controllerChannel;
-            new ParseInt(), // int panel;
-            new ParseInt(), // int spiral;
             new ParseInt(), // int position;
-            new ParseInt(), // int feather;
-            new ParseInt(), // int rung;
+            new ParseInt(), // int bodyPart;
+            new ParseInt(), // int rightLeft;
             new ParseDouble(), // float x;
             new ParseDouble(), // float y;
             new ParseDouble(), // float z;
@@ -317,15 +320,13 @@ public class MantisModel extends LXModel {
                 PuppetPixelParameters p = new PuppetPixelParameters();
 
                 p.controllerID = Integer.parseInt(c.get("controllerID").toString());
-                p.controllerChannel = Integer.parseInt(c.get("controllerChannel").toString());
-                p.panel = Integer.parseInt(c.get("panel").toString());
-                p.spiral = Integer.parseInt(c.get("spiralNum").toString());
-                p.position = Integer.parseInt(c.get("position").toString());
-                p.feather = Integer.parseInt(c.get("Feather").toString());
-                p.rung = Integer.parseInt(c.get("Rung").toString());
-                p.x = Double.parseDouble(c.get("X in Inches").toString());
-                p.y = Double.parseDouble(c.get("Y in Inches").toString());
-                p.z = Double.parseDouble(c.get("Z in Inches").toString());
+                p.channel = Integer.parseInt(c.get("channel").toString());
+                p.position = Integer.parseInt(c.get("address").toString());
+                p.bodyPart = Integer.parseInt(c.get("bodyPart").toString());
+                p.rightLeft = Integer.parseInt(c.get("rightLeft").toString());
+                p.x = Double.parseDouble(c.get("x").toString());
+                p.y = Double.parseDouble(c.get("y").toString());
+                p.z = Double.parseDouble(c.get("z").toString());
 
                 results.add(p);
             }

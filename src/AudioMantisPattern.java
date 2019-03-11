@@ -42,6 +42,7 @@ public class AudioMantisPattern extends MantisPattern {
         }
 
         for (PuppetPixel tp : this.model.puppetPixels) {
+            /*
             if (tp.feather == 0){
                 int color = LXColor.hsb(360, 50, rightBandFloats[(30 - tp.params.rung) % numBands] * 100.0);
                 colors[tp.p.index] = color;
@@ -55,6 +56,7 @@ public class AudioMantisPattern extends MantisPattern {
                 int color = LXColor.hsb(360, 0, leftBandFloats[7 - tp.feather] * 100.0);
                 colors[tp.p.index] = color;
             }
+            */
         }
     }
 

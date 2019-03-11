@@ -73,6 +73,7 @@ public class RainbowAmplitudePattern extends MantisPattern {
             } else {
                 currentSample = (tp.p.x < 0) ? leftBandFloats : rightBandFloats;
             }
+            /*
             if (tp.feather == 0) {
                 color = LXColor.hsb(colorValue, 100, currentSample[(30 - tp.params.rung) % numBands] * 100.0);
             } else if (tp.feather == 6) {
@@ -84,6 +85,7 @@ public class RainbowAmplitudePattern extends MantisPattern {
             } else {
                 continue;
             }
+            */
             colors[tp.p.index] = color;
         }
     }

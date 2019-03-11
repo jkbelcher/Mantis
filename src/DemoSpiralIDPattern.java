@@ -44,10 +44,12 @@ public class DemoSpiralIDPattern extends MantisPattern {
 		    PApplet.println("Spiral: " + spiralID + "  Position: " + position);
 		}
 
+		/*
 		for (PuppetPixel tp : model.puppetPixels) {
 			if (tp.params.spiral == spiralID) {
 				colors[tp.p.index] = tp.params.position == position ? LXColor.WHITE : LXColor.BLUE;
 			}
 		}
+		*/
 	}
 }

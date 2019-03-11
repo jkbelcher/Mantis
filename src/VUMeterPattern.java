@@ -140,7 +140,7 @@ public class VUMeterPattern extends MantisPattern {
     }
     
     private void initialize() {        
-        int numMeterBands =  model.panels.size();
+        int numMeterBands =  model.allLimbs.size();
 
         this.meter = new GraphicMeter(lx.engine.audio.input.mix, numMeterBands);
         this.meterPeaks = new GraphicMeter(lx.engine.audio.input.mix, numMeterBands);
@@ -157,10 +157,10 @@ public class VUMeterPattern extends MantisPattern {
 
         // Pair every panel to a band in the GraphicMeter
         this.pairs = new ArrayList<GroupBandPair>();
-        float hueRangePerPanel = 1f / (float)model.panels.size();
+        float hueRangePerPanel = 1f / (float)model.allLimbs.size();
         
-        for (int i=0; i < model.panels.size(); i++) {
-            this.pairs.add(new GroupBandPair(model.panels.get(i), i, hueRangePerPanel * (float)i));
+        for (int i=0; i < model.allLimbs.size(); i++) {
+            this.pairs.add(new GroupBandPair(model.allLimbs.get(i), i, hueRangePerPanel * (float)i));
         }
     }    
 

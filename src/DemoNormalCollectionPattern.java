@@ -26,7 +26,7 @@ public class DemoNormalCollectionPattern extends MantisPattern {
         super(lx);
         
         this.modelN = new MantisModelNormalized(model);
-        this.modelN.setPuppetPixelGroup(model.spiralsCW_IO);
+        //this.modelN.setPuppetPixelGroup(model.spiralsCW_IO);
 
         addParameter(nextGroup);
         this.nextGroup.addListener(new LXParameterListener() {

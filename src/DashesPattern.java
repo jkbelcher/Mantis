@@ -28,7 +28,7 @@ public class DashesPattern extends MantisPatternNormalized {
     public DashesPattern(LX lx) {
         super(lx);
 
-        this.modelN.setPuppetPixelGroup(model.spiralsCW_IO);  //start with a fun one
+        //this.modelN.setPuppetPixelGroup(model.spiralsCW_IO);  //start with a fun one
         
         addParameter(hue);
         addParameter(length);

@@ -1,14 +1,10 @@
 public class PuppetPixelParameters {
-    int id;
+    int controllerID;
+    int channel;
+    int position;
+    int bodyPart;
+    int rightLeft;
     double x;
     double y;
     double z;
-    int address;
-    int panel;
-    int feather;
-    int rung;
-    int spiral;
-    int controllerID;
-    int controllerChannel;
-    int position;
 }

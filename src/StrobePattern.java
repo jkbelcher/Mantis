@@ -29,7 +29,8 @@ public class StrobePattern extends MantisPatternNormalized {
     public int strobeColor = LXColor.WHITE;
 
     public StrobePattern(LX lx)  {
-        this(lx, new PuppetPixelGroup[] { MantisCode.applet.model.feathersLR });
+        //this(lx, new PuppetPixelGroup[] { MantisCode.applet.model.feathersLR });
+        this(lx, new PuppetPixelGroup[] {  });
     }
 
     public StrobePattern(LX lx, PuppetPixelGroup[] groups) {
