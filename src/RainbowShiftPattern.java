@@ -9,9 +9,10 @@ public class RainbowShiftPattern extends MantisPatternNormalized {
     public final CompoundParameter hueRange = 
             new CompoundParameter("hueRange", 128, 5, 400)
             .setDescription("hueRange");
-    public final CompoundParameter speed = 
+    /*public final CompoundParameter speed = 
             new CompoundParameter("Speed", .14, .001, 1.1)
             .setDescription("Speed in full range shifts per second");
+    */
     
     float huePos = 0;
 
@@ -19,13 +20,14 @@ public class RainbowShiftPattern extends MantisPatternNormalized {
         super(lx);
 
         addParameter(hueRange);
-        addParameter(speed);        
+        //addParameter(speed);
+        this.setSpeedRange(.001, 1.1);
 
         this.autoRandom.setValue(false);
     }
     
     public void setRandomParameters() {
-        randomizeTargetGroup();
+        //randomizeTargetGroup();
         randomizeParameter(this.hueRange);
         randomizeParameter(this.speed);
     }
@@ -37,12 +39,13 @@ public class RainbowShiftPattern extends MantisPatternNormalized {
         float hueRange = this.hueRange.getValuef();
         
         //Calc current position
-        float speed = this.speed.getValuef();
+        float speed = this.getSpeedf();
         float degreesMoved = hueRange*speed*(((float) deltaMs)/1000f);
         
         huePos -= degreesMoved;
         huePos %= 360;
         
+        /*
         //Get the currently targeted normalized pixel group
         PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
 
@@ -54,7 +57,16 @@ public class RainbowShiftPattern extends MantisPatternNormalized {
             PuppetPixelPos tpp = puppetPixelGroup.puppetPixels.get(i);
             float hue = ((degreesPerPixel*((float) i))+huePos) % 360;
             colors[tpp.getIndexColor()] = LXColor.hsb(hue, 100, 100);
-        }        
+        }   
+        */
+        
+        for (INormalizedScope scope : this.scopes) {
+            for (NormalizedPoint np : scope.getPointsNormalized()) {
+                float n = np.rn;
+                float hue = ((n * hueRange) + huePos) %360;
+                colors[np.p.index] = LXColor.hsb(hue, 100, 100);
+            }
+        }
     }
 
 }

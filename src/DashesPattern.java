@@ -7,7 +7,7 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
-public class DashesPattern extends MantisPatternNormalized {
+public class DashesPattern extends MantisPattern {
 
     public final CompoundParameter hue = 
             new CompoundParameter("Hue", LXColor.h(LXColor.RED), 0, 360)
@@ -28,8 +28,6 @@ public class DashesPattern extends MantisPatternNormalized {
     public DashesPattern(LX lx) {
         super(lx);
 
-        //this.modelN.setPuppetPixelGroup(model.spiralsCW_IO);  //start with a fun one
-        
         addParameter(hue);
         addParameter(length);
         addParameter(lengthOff);
@@ -40,7 +38,6 @@ public class DashesPattern extends MantisPatternNormalized {
     }
     
     public void setRandomParameters() {
-        randomizeTargetGroup();
         randomizeParameter(this.hue);
         randomizeParameter(this.length);
         randomizeParameter(this.lengthOff);
@@ -92,17 +89,19 @@ public class DashesPattern extends MantisPatternNormalized {
         }
         
         //Get the currently targeted normalized pixel group
-        PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
+        //PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
 
         //Draw it
-        int b=0;
-        for (int i = 0; i < puppetPixelGroup.size(); i++) {
-            PuppetPixelPos ppp = puppetPixelGroup.puppetPixels.get(i);
-            colors[ppp.getIndexColor()] = LXColor.hsb(hue, 100f, bright[b]);
-            
-            //Cycle through the brightness array
-            b++;
-            b %= bright.length;
+        for (PuppetPixelGroup ppg : this.model.allLimbs) {
+            int b=0;
+            for (int i = 0; i < ppg.size(); i++) {
+                PuppetPixel pp = ppg.puppetPixels.get(i);
+                colors[pp.getIndexColor()] = LXColor.hsb(hue, 100f, bright[b]);
+                
+                //Cycle through the brightness array
+                b++;
+                b %= bright.length;
+            }
         }
 
     }

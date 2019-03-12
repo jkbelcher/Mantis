@@ -2,10 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.model.LXAbstractFixture;
+import heronarts.lx.model.LXPoint;
 
-public class PuppetPixelGroup extends LXAbstractFixture {
+// *This class could use some cleanup, along with MantisFixture and MantisModel
+public class PuppetPixelGroup extends LXAbstractFixture implements INormalizedScope {
 
-	public final List<PuppetPixelPos> puppetPixels;
+	public final List<PuppetPixel> puppetPixels;
 	public int id = 0;
 	
 	public PuppetPixelGroup() {
@@ -14,15 +16,38 @@ public class PuppetPixelGroup extends LXAbstractFixture {
 
 	public PuppetPixelGroup(int id) {
 	    this.id=id;
-	    puppetPixels = new ArrayList<PuppetPixelPos>();
+	    puppetPixels = new ArrayList<PuppetPixel>();
     }
+	
+	public PuppetPixelGroup(MantisFixture fixture) {
+	    this.id = 0;
+        puppetPixels = new ArrayList<PuppetPixel>();
+        for (PuppetPixel pp : fixture.puppetPixels) {
+            this.addPuppetPixel(pp);
+        }	    
+	}
 
-	public PuppetPixelGroup addPuppetPixelPosition(PuppetPixelPos newItem) {
+	public PuppetPixelGroup addPuppetPixel(PuppetPixel newItem) {
 		this.puppetPixels.add(newItem);
-		this.addPoint(newItem.getPoint());
+		this.addPoint(newItem.p);
 		return this;
 	}
 	
+	public PuppetPixelGroup addPuppetPixels(PuppetPixelGroup copy) {
+	    for (PuppetPixel pp : copy.puppetPixels) {
+	        this.addPuppetPixel(pp);
+	    }
+	    return this;
+	}
+	
+    public List<LXPoint> getPoints() {
+        return this.points;
+    }
+
+    public LXPoint getPoint(int index) {
+        return this.points.get(index);
+    }
+/*	
 	public PuppetPixelGroup copyIndicesToChildren() {
 	    for (int i = 0; i<this.puppetPixels.size(); i++) {
 	        this.puppetPixels.get(i).setIndexGroup(i);
@@ -30,27 +55,43 @@ public class PuppetPixelGroup extends LXAbstractFixture {
 	    return this;
 	}	
 	
-	public PuppetPixelGroup calculateNormalsByIndex()	{
-		//Once all children have been added to the group,
-		//calculate the normalized positions of children based on index
-		
-		//Justin's thoughts: The range of normals will be 0..1.  Let's have 0 include no points
-		//and 1 include all points.  To do this, the first normalized position will be 1/[number of pixels].
-		//The last normalized position will be [number of pixels]/[number of pixels] = 1.
-		//No pixel within the group will have a normalized position of zero.
-		//Note this is true for our PuppetPixelGroups but not necessarily for other normalized
-		//positions in the LX framework.
-		
-		float numPixels = (float)this.puppetPixels.size();
-		
-		for (PuppetPixelPos item : this.puppetPixels) {
-			item.setNormal(((float)(item.getIndexGroup()+1))/numPixels);			
-		}		
-		
-		return this;
-	}
 
+*/
 	public int size() {
 	    return this.puppetPixels.size();
 	}
+	
+    // INormalizedScope
+    
+    NormalScope normalScope = null;
+    
+    protected final List<NormalizedPoint> normalizedPoints = new ArrayList<NormalizedPoint>();
+    
+    protected void computeNormalized() {
+        this.normalScope = new NormalScope(this);        
+        for (LXPoint p : this.getPoints()) {
+            this.normalizedPoints.add(new NormalizedPoint(p, this.normalScope));
+        }
+    }
+    
+    public NormalScope getNormalScope() {
+        return this.normalScope;
+    }
+    
+    public List<NormalizedPoint> getPointsNormalized() {
+        return this.normalizedPoints;
+    }
+    
+    public int countChildScopes() {
+        return 0;
+    }
+    
+    public List<INormalizedScope> getChildScope(int index) {
+        switch (index) {
+        default:
+            throw new IllegalArgumentException("An invalid child scope was requested: " + this.getClass() + " " + index);                
+        }
+    }
+    
+    // end INormalizedScope   
 }

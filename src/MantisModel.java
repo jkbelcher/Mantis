@@ -16,37 +16,22 @@ import org.supercsv.prefs.CsvPreference;
 
 import heronarts.lx.model.LXFixture;
 import heronarts.lx.model.LXModel;
+import heronarts.lx.model.LXPoint;
 
 /**
  * This model represents the entire Mantis puppet.
  * It contains lists of the logical lighted components on the puppet.
+ * *Note this is a bit messy after the port from Peacock.  It could use some cleanup.
  */
-public class MantisModel extends LXModel {
+public class MantisModel extends LXModel  implements INormalizedScope {
 
     public final List<MantisFixture> allMantisFixtures;   //One fixture for each controller channel.  Each body part is a fixture.
     public final List<MantisController> controllers;
     public final List<PuppetPixel> puppetPixels;
     
-    public final PuppetPixelGroup allPuppetPixels;
+    public final PuppetPixelGroup allPuppetPixels;  //Needed?
     public final List<PuppetPixelGroup> allLimbs;
-    /*
-    //Logical groupings of pixels
-    //Use these maps to find specific components by ID
-    public final List<PuppetPixelGroup> feathers;
-    public final List<PuppetPixelGroup> panels;
-    public final PuppetPixelGroup body;
-    public final PuppetPixelGroup neck;
-    public final PuppetPixelGroup eyes;
-    
-    //Normalized mappings
-    //There are a bunch of different ways to group/order the spirals.
-    //Use these objects to conveniently address pixels in a particular order, using a normalized 0..1 range.
-    //Each group contains a list of pairs of [PuppetPixel] + [normalized position within the group]
-    public final PuppetPixelGroup feathersLR;
-    public final PuppetPixelGroup panelsLR;
-    public final PuppetPixelGroup spiralsCW_IO;
-    public final PuppetPixelGroup spiralsCCW_IO;  
-    */
+    public final List<PuppetPixelGroup> allSections;
        
     public MantisModel(LXModel[] allFixtures, List<MantisFixture> allMantisFixtures, List<MantisController> controllers, List<PuppetPixel> puppetPixels) {
         super(allFixtures);
@@ -55,147 +40,65 @@ public class MantisModel extends LXModel {
         this.controllers = controllers;
         this.puppetPixels = puppetPixels;
         
-        //Sort PuppetPixels within each collection
+        // Sort PuppetPixels within each collection
         Collections.sort(this.allMantisFixtures);
         for (MantisFixture fixture : this.allMantisFixtures) {
             fixture.setLoaded();
         }
         
-        /*
         //Logical groups
-        this.feathers = new ArrayList<PuppetPixelGroup>();
-        this.panels = new ArrayList<PuppetPixelGroup>();
-        this.body = new PuppetPixelGroup();
-        this.neck = new PuppetPixelGroup();
-        this.eyes = new PuppetPixelGroup();
-        
-        //Normalized mappings
-        this.feathersLR = new PuppetPixelGroup();
-        this.panelsLR = new PuppetPixelGroup();
-        this.spiralsCW_IO = new PuppetPixelGroup();
-        this.spiralsCCW_IO = new PuppetPixelGroup();
-        */
         this.allPuppetPixels = new PuppetPixelGroup();
         this.allLimbs = new ArrayList<PuppetPixelGroup>();
+        this.allSections = new ArrayList<PuppetPixelGroup>();
         
         this.initializeSubCollections();
     }
     
     private void initializeSubCollections() {
-        /*
-        //Feathers
-        for (int i = 1; i <= 13; i++) {
-            this.feathers.add(new PuppetPixelGroup(i));            
-        }
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isFeatherPixel()) {
-                this.feathers.get(p.feather-1).addPuppetPixelPosition(new PuppetPixelPos(p));
+        PuppetPixelGroup claws = new PuppetPixelGroup();
+        PuppetPixelGroup legs = new PuppetPixelGroup();
+        PuppetPixelGroup wings = new PuppetPixelGroup();
+        
+        // Limbs
+        for (MantisFixture f : this.allMantisFixtures) {
+            PuppetPixelGroup newLimb = new PuppetPixelGroup(f);
+            allLimbs.add(newLimb);
+            
+            PuppetPixel pp = newLimb.puppetPixels.get(0); //Check first pixel
+            switch (pp.params.bodyPart) {
+            case 1:
+                claws.addPuppetPixels(newLimb);
+                break;
+            case 2: 
+                legs.addPuppetPixels(newLimb);
+                break;
+            case 3:
+                wings.addPuppetPixels(newLimb);
+                break;
             }
         }
         
-        //Panels
-        for (int i = 1; i <= 12; i++) {
-            this.panels.add(new PuppetPixelGroup(i));            
-        }
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isPanelPixel()) {
-                this.panels.get(p.panel-1).addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }
+        // Sections
+        this.allSections.add(claws);
+        this.allSections.add(legs);
+        this.allSections.add(wings);
         
-        //Body
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isBodyPixel()) {
-                this.body.addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }
-        
-        //Neck
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isNeckPixel()) {
-                this.neck.addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }
-        
-        //Eyes
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isEyePixel()) {
-                this.eyes.addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }
-        
-                
-    	//FeathersLR
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isFeatherPixel()) {                
-                this.feathersLR.addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }
-        
-        //PanelsLR
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isPanelPixel()) {                
-                this.panelsLR.addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }
-        
-        //SpiralsCW_IO = Spirals, Clockwise, Inside->Outside
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isPanelPixel() && p.params.spiral % 2 == 0) {                
-                this.spiralsCW_IO.addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }
-        
-        //SpiralsCCW_IO = Spirals, Counter-Clockwise, Inside->Outside
-        for (PuppetPixel p : this.puppetPixels) {
-            if (p.isPanelPixel() && p.params.spiral % 2 != 0) {                
-                this.spiralsCCW_IO.addPuppetPixelPosition(new PuppetPixelPos(p));
-            }
-        }       
-        */
-
+        // All pixels
+        for (PuppetPixel pp : this.puppetPixels) {
+            this.allPuppetPixels.addPuppetPixel(pp);
+        }        
     }
     
     protected MantisModel computeNormalsMantis() {
-        //Positions are computed here, after the model is built and calculateNormals() has been called on it.
-        //This is in case a collection wants to sort itself using a normalized value.
-/*
-        //Feathers
-        for (PuppetPixelGroup g : this.feathers) {
-            g.puppetPixels.sort((p1,p2) -> Float.compare(p1.getPoint().r, p2.getPoint().r));
-            g.copyIndicesToChildren().calculateNormalsByIndex();
+        this.allPuppetPixels.computeNormalized();
+        for (PuppetPixelGroup ppg : this.allLimbs) {
+            ppg.computeNormalized();
         }
-        
-        //Panels
-        for (PuppetPixelGroup g : this.panels) {
-            g.puppetPixels.sort((p1,p2) -> Float.compare(p1.getPoint().r, p2.getPoint().r));
-            g.copyIndicesToChildren().calculateNormalsByIndex();
-        }
+        for (PuppetPixelGroup ppg : this.allSections) {
+            ppg.computeNormalized();
+        }        
+        this.computeNormalized();
 
-        //Body
-        this.body.puppetPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
-        this.body.copyIndicesToChildren().calculateNormalsByIndex();
-                
-        //Neck
-        this.neck.puppetPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
-        this.neck.copyIndicesToChildren().calculateNormalsByIndex();
-        
-        //Eyes
-        this.eyes.puppetPixels.sort((p1,p2) -> p2.getPosition() - p1.getPosition());
-        this.eyes.copyIndicesToChildren().calculateNormalsByIndex();
-        
-        this.feathersLR.puppetPixels.sort((p1,p2) -> p1.getFeather() == p2.getFeather() ? p1.getPosition() - p2.getPosition() : p1.getFeather() - p2.getFeather());
-        this.feathersLR.copyIndicesToChildren().calculateNormalsByIndex();
-
-        this.panelsLR.puppetPixels.sort((p1,p2) -> p1.getPanel() == p2.getPanel() ? Float.compare(p1.getPoint().r, p2.getPoint().r) : p1.getPanel() - p2.getPanel());
-        this.panelsLR.copyIndicesToChildren().calculateNormalsByIndex();
-        
-        this.spiralsCW_IO.puppetPixels.sort((p1,p2) -> p1.getSpiral() == p2.getSpiral() ? p2.getPosition() - p1.getPosition() : p2.getSpiral() - p1.getSpiral());
-        this.spiralsCW_IO.copyIndicesToChildren().calculateNormalsByIndex();    //*Could do normals by position and not by spiral.
-
-        this.spiralsCCW_IO.puppetPixels.sort((p1,p2) -> p1.getSpiral() == p2.getSpiral() ? p2.getPosition() - p1.getPosition() : p2.getSpiral() - p1.getSpiral());
-        this.spiralsCCW_IO.copyIndicesToChildren().calculateNormalsByIndex();
-*/
     	return this;
     }
 
@@ -343,5 +246,46 @@ public class MantisModel extends LXModel {
 
         return results;
     }
-
+    
+    
+    // INormalizedScope
+    
+    NormalScope normalScope = null;
+    
+    protected final List<NormalizedPoint> normalizedPoints = new ArrayList<NormalizedPoint>();
+    
+    protected void computeNormalized() {
+        this.normalScope = new NormalScope(this);        
+        for (LXPoint p : this.getPoints()) {
+            this.normalizedPoints.add(new NormalizedPoint(p, this.normalScope));
+        }
+    }
+    
+    public NormalScope getNormalScope() {
+        return this.normalScope;
+    }
+    
+    public List<NormalizedPoint> getPointsNormalized() {
+        return this.normalizedPoints;
+    }
+    
+    public int countChildScopes() {
+        return 2;
+    }
+    
+    public List<INormalizedScope> getChildScope(int index) {
+        /* Sections
+         * Limbs
+         */
+        switch (index) {
+        case 0:
+            return new ArrayList<INormalizedScope>(this.allLimbs);
+        case 1:
+            return new ArrayList<INormalizedScope>(this.allSections);
+        default:
+            throw new IllegalArgumentException("An invalid child scope was requested: " + this.getClass() + " " + index);                
+        }
+    }
+    
+    // end INormalizedScope
 }

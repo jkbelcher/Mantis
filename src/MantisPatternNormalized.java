@@ -1,78 +1,63 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import heronarts.lx.LX;
-import heronarts.lx.parameter.BooleanParameter;
+import heronarts.lx.parameter.EnumParameter;
 import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
-import heronarts.lx.parameter.BooleanParameter.Mode;
 
 public abstract class MantisPatternNormalized extends MantisPattern {
 
-    public final MantisModelNormalized modelN;
+    List<INormalizedScope> scopes;
+    List<INormalizedScope> entireScope;
     
-    public final BooleanParameter randGroup = 
-            new BooleanParameter("RandGroup", true)
-            .setDescription("When ENABLED, the target group will be included in the randomization.")
+    public final EnumParameter<MantisScope> targetScope =
+            new EnumParameter<MantisScope>("Scope", MantisScope.ENTIRE)
+            .setDescription("Target scope for normalized pattern");
+    
+    public enum MantisScope {
+        ENTIRE,
+        SECTIONS,
+        LIMBS
+      };
+
+    /*
+    public final BooleanParameter randScope = 
+            new BooleanParameter("RandScope", true)
+            .setDescription("When ENABLED, the target scope will be included in the randomization.")
             .setMode(Mode.TOGGLE);
-    
-    public final BooleanParameter nextGroup = 
-            new BooleanParameter("NextGroup")
-            .setDescription("Change the pattern to target the next PuppetPixelGroup")
-            .setMode(Mode.MOMENTARY);
+    */
 
     public MantisPatternNormalized(LX lx) {
         super(lx);
+                
+        this.entireScope = new ArrayList<INormalizedScope>();
+        this.entireScope.add(this.model);
         
-        this.modelN = new MantisModelNormalized(model);
-        
-        addParameter(randGroup);
-        addParameter(nextGroup);
-        this.nextGroup.addListener(new LXParameterListener() {
-            public void onParameterChanged(LXParameter p) {
-                if (((BooleanParameter)p).getValueb()) {
-                    goNextGroup();
-                }
-            }
-            });
-    }
+        addParameter(targetScope);
+        //addParameter(randScope);
 
-    public MantisPatternNormalized(LX lx, PuppetPixelGroup[] groups) {
-        super(lx);
-        
-        this.modelN = new MantisModelNormalized(model, groups);
-
-        addParameter(randGroup);
-        addParameter(nextGroup);
-        this.nextGroup.addListener(new LXParameterListener() {
+        this.targetScope.addListener(new LXParameterListener() {
             public void onParameterChanged(LXParameter p) {
-                if (((BooleanParameter)p).getValueb()) {
-                    goNextGroup();
-                }
+                updateTargetScope();
             }
             });
-    }
-    
-    public MantisPatternNormalized(LX lx, MantisModelNormalized modelN) {
-        super(lx);
         
-        this.modelN = modelN;
-    
-        addParameter(randGroup);
-        addParameter(nextGroup);
-        this.nextGroup.addListener(new LXParameterListener() {
-            public void onParameterChanged(LXParameter p) {
-                if (((BooleanParameter)p).getValueb()) {
-                    goNextGroup();
-                }
-            }
-            });
+        updateTargetScope();
     }    
     
-    public void goNextGroup() {
-        this.modelN.goNext();
-    }
-
-    public void randomizeTargetGroup() {
-        if (this.randGroup.getValueb()) {
-            this.modelN.goRandom();
+    void updateTargetScope() {
+        switch (this.targetScope.getEnum()) {
+            case SECTIONS:
+                this.scopes = this.model.getChildScope(1);
+                break;
+            case LIMBS:
+                this.scopes = this.model.getChildScope(0);
+                break;
+            case ENTIRE:
+                default:
+                    this.scopes = this.entireScope;
+                    break;                    
         }
     }
 

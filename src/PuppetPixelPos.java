@@ -1,5 +1,6 @@
 import heronarts.lx.model.LXPoint;
 
+@Deprecated
 public class PuppetPixelPos {
 
 	private final PuppetPixel pixel;

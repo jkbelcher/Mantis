@@ -72,6 +72,49 @@ public abstract class MantisPattern extends RandomizableLXPattern {
         addParameter(isRainbow);
     }
     
+    protected void setSizeRange(int min, int max) {
+        this.adjSize = new Range(min, max);        
+    }
+
+    protected void setSizeRange(double min, double max) {
+        this.adjSize = new Range(min, max);        
+    }
+
+    protected void setSpeedRange(int min, int max) {
+        this.adjSpeed = new Range(min, max);        
+    }
+    
+    protected void setSpeedRange(double min, double max) {
+        this.adjSpeed = new Range(min, max);        
+    }
+
+    protected double getSize() {
+        return this.adjSize.normalizedToValue(this.size.getValue());
+    }
+    
+    protected float getSizef() {
+        return (float)this.getSize();
+    }
+
+    protected double getSpeed() {
+        return this.adjSpeed.normalizedToValue(this.speed.getValue());
+    }
+    
+    protected float getSpeedf() {
+        return (float)this.getSpeed();
+    }
+
+    public void setRandomParameters() {
+        randomizeParameter(this.hue1);
+        randomizeParameter(this.hue2);
+        //randomizeParameter(this.saturation1);
+        randomizeParameter(this.brightness1);
+        randomizeParameter(this.brightness2);
+        randomizeParameter(this.isRainbow);
+        randomizeParameter(this.size);
+        randomizeParameter(this.speed);
+    }    
+    
     protected int getColor1() {
         return LXColor.hsb(this.hue1.getValuef(), this.saturation1.getValuef(), this.brightness1.getValuef());
     }
