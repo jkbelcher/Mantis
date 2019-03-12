@@ -1,18 +1,14 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 
+@LXCategory("Colossal Collective")
 public class RainbowShiftPattern extends MantisPatternNormalized {
-
-    private static final float RADIANS_PER_REVOLUTION = 2.0f;
 
     public final CompoundParameter hueRange = 
             new CompoundParameter("hueRange", 128, 5, 400)
             .setDescription("hueRange");
-    /*public final CompoundParameter speed = 
-            new CompoundParameter("Speed", .14, .001, 1.1)
-            .setDescription("Speed in full range shifts per second");
-    */
     
     float huePos = 0;
 
@@ -20,14 +16,10 @@ public class RainbowShiftPattern extends MantisPatternNormalized {
         super(lx);
 
         addParameter(hueRange);
-        //addParameter(speed);
         this.setSpeedRange(.001, 1.1);
-
-        this.autoRandom.setValue(false);
     }
     
     public void setRandomParameters() {
-        //randomizeTargetGroup();
         randomizeParameter(this.hueRange);
         randomizeParameter(this.speed);
     }
@@ -38,27 +30,12 @@ public class RainbowShiftPattern extends MantisPatternNormalized {
         
         float hueRange = this.hueRange.getValuef();
         
-        //Calc current position
+        // Calc current position
         float speed = this.getSpeedf();
         float degreesMoved = hueRange*speed*(((float) deltaMs)/1000f);
         
         huePos -= degreesMoved;
         huePos %= 360;
-        
-        /*
-        //Get the currently targeted normalized pixel group
-        PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
-
-        int numPixels = puppetPixelGroup.size();
-        float numPixelsf = (float) numPixels;
-        float degreesPerPixel = (hueRange/numPixelsf);
-
-        for (int i = 0; i < numPixels; i++) {
-            PuppetPixelPos tpp = puppetPixelGroup.puppetPixels.get(i);
-            float hue = ((degreesPerPixel*((float) i))+huePos) % 360;
-            colors[tpp.getIndexColor()] = LXColor.hsb(hue, 100, 100);
-        }   
-        */
         
         for (INormalizedScope scope : this.scopes) {
             for (NormalizedPoint np : scope.getPointsNormalized()) {

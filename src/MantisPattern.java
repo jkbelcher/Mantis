@@ -108,6 +108,7 @@ public abstract class MantisPattern extends RandomizableLXPattern {
         randomizeParameter(this.hue1);
         randomizeParameter(this.hue2);
         //randomizeParameter(this.saturation1);
+        //randomizeParameter(this.saturation2);
         randomizeParameter(this.brightness1);
         randomizeParameter(this.brightness2);
         randomizeParameter(this.isRainbow);

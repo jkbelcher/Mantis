@@ -2,11 +2,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 
+@LXCategory("Colossal Collective")
 public class RisingSquaresPattern extends MantisPattern {
+    
+    //**Needs fixing to work on Mantis
 
     public final DiscreteParameter numSquares = 
             new DiscreteParameter("Count", 30, 1, 100)
@@ -38,8 +42,6 @@ public class RisingSquaresPattern extends MantisPattern {
         addParameter(sizeVariance);
         addParameter(minSpeed);
         addParameter(maxSpeed);
-
-        this.autoRandom.setValue(false);
     }
 
     public void setRandomParameters() {

@@ -16,7 +16,7 @@ public abstract class RandomizableLXPattern extends LXPattern {
             .setMode(Mode.MOMENTARY);
     
     public final BooleanParameter autoRandom = 
-            new BooleanParameter("AutoRandom", true)
+            new BooleanParameter("AutoRandom", false)
             .setDescription("When ENABLED, randomize will be called every time the pattern is started.")
             .setMode(Mode.TOGGLE);
 

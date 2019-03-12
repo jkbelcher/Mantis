@@ -1,10 +1,12 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.model.LXPoint;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.audio.LXAudioComponent;
 import heronarts.lx.audio.FourierTransform;
 
+@LXCategory("Colossal Collective")
 public class AudioMantisPattern extends MantisPattern {
     public AudioMantisPattern(LX lx) {
         super(lx);

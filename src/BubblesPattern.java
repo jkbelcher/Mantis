@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.LXParameter;
@@ -9,6 +10,7 @@ import heronarts.lx.parameter.LXParameter;
 /* Bubbles.
  * This pattern Copyright(c)2019 Justin Belcher, use with permission only.
  */
+@LXCategory("Colossal Collective")
 public class BubblesPattern extends MantisPattern {
 
     public final CompoundParameter density = 

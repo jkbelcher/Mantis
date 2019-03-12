@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.audio.GraphicMeter;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.BooleanParameter;
@@ -11,6 +12,7 @@ import heronarts.lx.parameter.LXParameter;
 import heronarts.lx.parameter.LXParameterListener;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
+@LXCategory("Colossal Collective")
 public class VUMeterPattern extends MantisPattern {
 
     /////////////////////////////////////////////////

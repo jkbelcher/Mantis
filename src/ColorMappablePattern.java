@@ -1,9 +1,10 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.model.LXPoint;
-import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 
+@LXCategory("Colossal Collective RETIRED")
 public class ColorMappablePattern extends MantisPattern {
 
     public final DiscreteParameter red = 
@@ -18,17 +19,12 @@ public class ColorMappablePattern extends MantisPattern {
             new DiscreteParameter("Blue", 0, 0, 255)
             .setDescription("Blue");
     
-    public final CompoundParameter brightness = 
-            new CompoundParameter("Brightness", 0, 0, 1)
-            .setDescription("Brightness");
-    
     public ColorMappablePattern(LX lx) {
         super(lx);
         
         addParameter(red);
         addParameter(green);
-        addParameter(blue);
-        //addParameter(brightness);        
+        addParameter(blue);      
     }
 
     @Override
@@ -38,9 +34,10 @@ public class ColorMappablePattern extends MantisPattern {
         int red = this.red.getValuei();
         int green = this.green.getValuei();
         int blue = this.blue.getValuei();
-        float brightness = this.brightness.getValuef();
+        float brightness = this.brightness1.getValuef();
+        float saturation = this.saturation1.getValuef();
         
-        int c = LXColor.hsb(LXColor.h(LXColor.rgb(red, green, blue)), 100, brightness);
+        int c = LXColor.hsb(LXColor.h(LXColor.rgb(red, green, blue)), saturation, brightness);
 
         for (LXPoint p : this.model.getPoints()) {
             colors[p.index] = c;

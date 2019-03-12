@@ -1,18 +1,20 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
 import heronarts.lx.parameter.BooleanParameter;
 import heronarts.lx.parameter.DiscreteParameter;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 import processing.core.PApplet;
 
-public class DemoChannelPattern extends MantisPattern {
+@LXCategory("Test")
+public class TestChannelPattern extends MantisPattern {
 
     public final DiscreteParameter channel = 
-        new DiscreteParameter("Channel", 1, 1, 32)
+        new DiscreteParameter("Channel", 1, 1, 32+1)
         .setDescription("Channel to light");
       
     public final DiscreteParameter index = 
-            new DiscreteParameter("Index", 0, 0, 74)
+            new DiscreteParameter("Index", 0, 0, 99+1)
             .setDescription("Index");
 
     public final BooleanParameter identify = 
@@ -20,7 +22,7 @@ public class DemoChannelPattern extends MantisPattern {
             .setDescription("Identify the current values")
             .setMode(Mode.MOMENTARY);    
 
-    public DemoChannelPattern(LX lx) {
+    public TestChannelPattern(LX lx) {
         super(lx);
         
         addParameter(channel);

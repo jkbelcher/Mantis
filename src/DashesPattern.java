@@ -1,20 +1,12 @@
 import heronarts.lx.LX;
+import heronarts.lx.LXCategory;
 import heronarts.lx.color.LXColor;
-import heronarts.lx.parameter.BooleanParameter;
 import heronarts.lx.parameter.CompoundParameter;
 import heronarts.lx.parameter.DiscreteParameter;
-import heronarts.lx.parameter.LXParameter;
-import heronarts.lx.parameter.LXParameterListener;
-import heronarts.lx.parameter.BooleanParameter.Mode;
 
+@LXCategory("Colossal Collective")
 public class DashesPattern extends MantisPattern {
 
-    public final CompoundParameter hue = 
-            new CompoundParameter("Hue", LXColor.h(LXColor.RED), 0, 360)
-            .setDescription("Hue");
-    public final DiscreteParameter length = 
-            new DiscreteParameter("Length", 5, 3, 30)
-            .setDescription("Number of pixels per dash");
     public final DiscreteParameter lengthOff = 
             new DiscreteParameter("LenOff", 1, 0, 30)
             .setDescription("Number of pixels between each dash");    
@@ -28,21 +20,19 @@ public class DashesPattern extends MantisPattern {
     public DashesPattern(LX lx) {
         super(lx);
 
-        addParameter(hue);
-        addParameter(length);
+        this.setSizeRange(2, 30);
+        this.setSpeedRange(0, 60);        
+        
         addParameter(lengthOff);
         addParameter(fade);
-        addParameter(speed);
-        
-        this.autoRandom.setValue(false);
+
+        this.setSpeedRange(0, 60);
     }
     
     public void setRandomParameters() {
-        randomizeParameter(this.hue);
-        randomizeParameter(this.length);
+        super.setRandomParameters();
         randomizeParameter(this.lengthOff);
         randomizeParameter(this.fade);
-        randomizeParameter(this.speed);
     }
     
     float pos = 0;
@@ -51,11 +41,14 @@ public class DashesPattern extends MantisPattern {
     protected void run(double deltaMs) {
         this.clearColors();
         
-        float hue = this.hue.getValuef();
-        int length = this.length.getValuei();
-        float lengthf = (float)length;
+        float hue = this.hue1.getValuef();
+        float saturation = this.saturation1.getValuef();
+        float brightness = this.brightness1.getValuef();
+        
+        float speed = this.getSpeedf();
+        float lengthf = this.getSizef();
+        int length = (int)lengthf;        
         int lengthOff = this.lengthOff.getValuei();
-        float speed = this.speed.getValuef();
         float fade = this.fade.getValuef();
         float fadeLen = fade * lengthf;
         
@@ -73,11 +66,11 @@ public class DashesPattern extends MantisPattern {
         float offset = pos;
         for (int iBright = 0; iBright < bright.length ; iBright++) {
             if (offset < fadeLen) {
-                bright[iBright] = (offset / fadeLen) * 100f; 
+                bright[iBright] = (offset / fadeLen) * brightness; 
             } else if (offset < lengthf - fadeLen) {
-                bright[iBright] = 100f;
+                bright[iBright] = brightness;
             } else if (offset < lengthf) {
-                bright[iBright] = ((lengthf-offset) / fadeLen) * 100f;                
+                bright[iBright] = ((lengthf-offset) / fadeLen) * brightness;                
             } else {
                 bright[iBright] = 0f;
             }
@@ -87,16 +80,13 @@ public class DashesPattern extends MantisPattern {
                 offset -= totalLenf;
             }            
         }
-        
-        //Get the currently targeted normalized pixel group
-        //PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
 
         //Draw it
         for (PuppetPixelGroup ppg : this.model.allLimbs) {
             int b=0;
             for (int i = 0; i < ppg.size(); i++) {
                 PuppetPixel pp = ppg.puppetPixels.get(i);
-                colors[pp.getIndexColor()] = LXColor.hsb(hue, 100f, bright[b]);
+                colors[pp.getIndexColor()] = LXColor.hsb(hue, saturation, bright[b]);
                 
                 //Cycle through the brightness array
                 b++;
