@@ -87,6 +87,7 @@ public class MantisCode extends PApplet implements LXOscListener {
         lx.registerPattern(PulsePattern.class);
         lx.registerPattern(ColorMappablePattern.class);
         lx.registerPattern(BubblesPattern.class);
+        lx.registerPattern(CircularPattern.class);
         
         // Add test patterns to browser
         lx.registerPattern(TestBodyPartPattern.class);
