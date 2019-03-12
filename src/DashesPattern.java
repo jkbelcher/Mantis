@@ -41,9 +41,13 @@ public class DashesPattern extends MantisPattern {
     protected void run(double deltaMs) {
         this.clearColors();
         
-        float hue = this.hue1.getValuef();
-        float saturation = this.saturation1.getValuef();
-        float brightness = this.brightness1.getValuef();
+        float hue1 = this.hue1.getValuef();
+        float saturation1 = this.saturation1.getValuef();
+        float brightness1 = this.brightness1.getValuef();
+
+        float hue2 = this.hue2.getValuef();
+        float saturation2 = this.saturation2.getValuef();
+        float brightness2 = this.brightness2.getValuef();
         
         float speed = this.getSpeedf();
         float lengthf = this.getSizef();
@@ -52,7 +56,9 @@ public class DashesPattern extends MantisPattern {
         float fade = this.fade.getValuef();
         float fadeLen = fade * lengthf;
         
-        int totalLen = length + lengthOff;
+        int halfLen = length + lengthOff;
+        float halfLenf = (float)halfLen;
+        int totalLen = halfLen * 2;
         float totalLenf = (float)totalLen;
         
         //Decrement the position, which visually advances the pattern
@@ -62,18 +68,38 @@ public class DashesPattern extends MantisPattern {
         }
         
         //Calculate array of brightnesses for this frame
-        float bright[] = new float[totalLen];
+        int dashColors[] = new int[totalLen];
         float offset = pos;
-        for (int iBright = 0; iBright < bright.length ; iBright++) {
+        if (brightness2 == 0) {
+            hue2 = hue1;
+            saturation2 = saturation1;
+            brightness2 = brightness1;
+        }
+        // *Need to fix fade out on first color.  This was rushed.
+        for (int iBright = 0; iBright < totalLen ; iBright++) {
+            float brightPixel;
             if (offset < fadeLen) {
-                bright[iBright] = (offset / fadeLen) * brightness; 
+                brightPixel = (offset / fadeLen); 
             } else if (offset < lengthf - fadeLen) {
-                bright[iBright] = brightness;
+                brightPixel = 1f;
             } else if (offset < lengthf) {
-                bright[iBright] = ((lengthf-offset) / fadeLen) * brightness;                
+                brightPixel = ((lengthf-offset) / fadeLen);                
+            } else if (offset < halfLenf){
+                brightPixel = 0f;
+            } else if (offset < halfLenf + fadeLen) {
+                brightPixel = ((offset-halfLenf) / fadeLen);
+            } else if (offset < halfLenf + lengthf - fadeLen) {
+                brightPixel = 1f;                
+            } else if (offset < (halfLenf + lengthf-offset) / fadeLen) {
+                brightPixel = ((lengthf-(offset-halfLenf)) / fadeLen);
             } else {
-                bright[iBright] = 0f;
-            }
+                brightPixel = 0f;
+            }                
+            
+            if (offset > halfLen)
+                dashColors[iBright] = LXColor.hsb(hue1, saturation1, brightPixel * brightness1);
+            else
+                dashColors[iBright] = LXColor.hsb(hue2, saturation2, brightPixel * brightness2);                
             
             offset += 1f;
             if (offset >= totalLenf) {
@@ -86,11 +112,11 @@ public class DashesPattern extends MantisPattern {
             int b=0;
             for (int i = 0; i < ppg.size(); i++) {
                 PuppetPixel pp = ppg.puppetPixels.get(i);
-                colors[pp.getIndexColor()] = LXColor.hsb(hue, saturation, bright[b]);
+                colors[pp.getIndexColor()] = dashColors[b];
                 
                 //Cycle through the brightness array
                 b++;
-                b %= bright.length;
+                b %= dashColors.length;
             }
         }
 
