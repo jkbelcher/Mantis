@@ -48,7 +48,7 @@ public class MantisModel extends LXModel {
     public final PuppetPixelGroup spiralsCCW_IO;  
     */
        
-    public MantisModel(LXFixture[] allFixtures, List<MantisFixture> allMantisFixtures, List<MantisController> controllers, List<PuppetPixel> puppetPixels) {
+    public MantisModel(LXModel[] allFixtures, List<MantisFixture> allMantisFixtures, List<MantisController> controllers, List<PuppetPixel> puppetPixels) {
         super(allFixtures);
 
         this.allMantisFixtures = allMantisFixtures;
@@ -245,10 +245,14 @@ public class MantisModel extends LXModel {
             fixture.addPuppetPixel(newPuppetPixel);
         }
 
-        //LX wants a list of fixtures that as a whole contains one instance of each LXPoint.
-        List<LXFixture> _fixtures = new ArrayList<LXFixture>(allMantisFixtures);
+        // LX wants a list of child models that as a whole contain one instance of each LXPoint.
+        LXModel[] children = new LXModel[allMantisFixtures.size()];
+        int i = 0;
+        for (LXFixture fixture : allMantisFixtures) {
+            children[i++] = new LXModel(fixture.getPoints());
+        }
 
-        return new MantisModel(_fixtures.toArray(new LXFixture[_fixtures.size()]), allMantisFixtures, controllers, puppetPixels);
+        return new MantisModel(children, allMantisFixtures, controllers, puppetPixels);
     }
 
     private static CellProcessor[] getControllerCsvProcessors() {

@@ -167,7 +167,7 @@ public class MantisCode extends PApplet implements LXOscListener {
 
         // Create the P3LX engine
         // Third parameter=true starts in Multi-threaded mode
-        lx = new LXStudio(this, model, true);
+        lx = new LXStudio(this, model);
 
         //Use multi-threading for network output
         //lx.engine.output.mode.setValue(LXOutput.Mode.RAW);

@@ -7,8 +7,8 @@ import java.util.TreeMap;
 import heronarts.lx.model.LXPoint;
 import processing.core.PApplet;
 
-//For the Peacock each channel is a fixture.
-//Both Panels and Feathers are fixtures/channels.
+// For the Mantis each channel is a fixture.
+// Each limb is a fixture/channel.
 public class MantisFixture extends LXAbstractFixtureMapped implements Comparable<MantisFixture> {
 
     public final int channel;

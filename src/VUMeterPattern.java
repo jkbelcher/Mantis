@@ -197,9 +197,9 @@ public class VUMeterPattern extends MantisPattern {
                 }
             }
             if (litPixels < numPixels) {
-                colors[gb.group.puppetPixels.get(litPixels).getIndexColor()] = LXColor.scaleBrightness(color, percentLastPixel);
+                colors[gb.group.puppetPixels.get(litPixels).getIndexColor()] = LXColor.hsb(hue, 100, percentLastPixel);
                 if (mirror)
-                    colors[gb.group.puppetPixels.get(gb.group.size()-1-litPixels).getIndexColor()] = LXColor.scaleBrightness(color, percentLastPixel);                    
+                    colors[gb.group.puppetPixels.get(gb.group.size()-1-litPixels).getIndexColor()] = LXColor.hsb(hue, 100, percentLastPixel);                    
             }
             
             // Get peaks from a meter with a slower release

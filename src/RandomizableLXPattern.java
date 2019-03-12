@@ -47,16 +47,34 @@ public abstract class RandomizableLXPattern extends LXPattern {
         if (this.autoRandom.getValueb()) {
             this.setRandomParameters();
         }
-    }
+    }    
     
     public static void randomizeParameter(BoundedParameter parameter) {
         float newValue = (float) ((Math.random()*(parameter.range.max-parameter.range.min))+parameter.range.min);
         parameter.setValue(newValue);
     }
 
+    public static void randomizeParameter(BoundedParameter parameter, double min, double max) {
+        float newValue = (float) ((Math.random()*(max-min))+min);
+        parameter.setValue(newValue);
+    }
+    
     public static void randomizeParameter(DiscreteParameter parameter) {
         int newValue = (int) (Math.random() * ((float)(parameter.getRange()))+parameter.getMinValue());
         parameter.setValue(newValue);
     }
+    
+    public static void randomizeParameter(BooleanParameter parameter) {
+        boolean newValue = Math.random() >= 0.5 ? true : false;
+        parameter.setValue(newValue);
+    }
 
+    public int getRandomColor() {
+        return this.getRandomColor(100);
+    }
+    
+    public int getRandomColor(float brightness) {
+        return LXColor.hsb(Math.random() * 360.0, 100, brightness);
+    }
+    
 }

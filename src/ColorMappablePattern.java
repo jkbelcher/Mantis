@@ -28,7 +28,7 @@ public class ColorMappablePattern extends MantisPattern {
         addParameter(red);
         addParameter(green);
         addParameter(blue);
-        addParameter(brightness);        
+        //addParameter(brightness);        
     }
 
     @Override
@@ -40,7 +40,7 @@ public class ColorMappablePattern extends MantisPattern {
         int blue = this.blue.getValuei();
         float brightness = this.brightness.getValuef();
         
-        int c = LXColor.scaleBrightness(LXColor.rgb(red, green, blue), brightness);
+        int c = LXColor.hsb(LXColor.h(LXColor.rgb(red, green, blue)), 100, brightness);
 
         for (LXPoint p : this.model.getPoints()) {
             colors[p.index] = c;

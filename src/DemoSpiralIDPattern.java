@@ -9,6 +9,7 @@ import processing.core.PApplet;
 import heronarts.lx.parameter.BooleanParameter.Mode;
 
 public class DemoSpiralIDPattern extends MantisPattern {
+    
     public final DiscreteParameter spiralID = 
         new DiscreteParameter("SpiralID", 1, 1, 24)
         .setDescription("Spiral ID to light");
@@ -33,7 +34,7 @@ public class DemoSpiralIDPattern extends MantisPattern {
 	@Override
 	protected void run(double arg0) {
 		//this.clearColors();
-	    this.setColors(LXColor.RED);
+	    this.setColors(this.getColor1());
 	    
 		//Get the current value of the parameter
 		int spiralID = this.spiralID.getValuei();

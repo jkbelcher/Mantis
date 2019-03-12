@@ -26,7 +26,7 @@ public class StrobePattern extends MantisPatternNormalized {
             new CompoundParameter("TimeOff", .1, .005, 0.3)
             .setDescription("Length in seconds between flashes");
     
-    public int strobeColor = LXColor.WHITE;
+    //public int strobeColor = LXColor.WHITE;
 
     public StrobePattern(LX lx)  {
         //this(lx, new PuppetPixelGroup[] { MantisCode.applet.model.feathersLR });
@@ -85,9 +85,11 @@ public class StrobePattern extends MantisPatternNormalized {
 
             PuppetPixelGroup puppetPixelGroup = this.modelN.getPuppetPixelGroup();
             
+            int color1 = LXColor.hsb(this.hue1.getValuef(), this.saturation1.getValuef(), this.brightness1.getValuef() * outputLevel);
+            
             for (int i = 0; i < puppetPixelGroup.size(); i++) {
                 PuppetPixelPos tpp = puppetPixelGroup.puppetPixels.get(i);
-                colors[tpp.getIndexColor()] = LXColor.scaleBrightness(this.strobeColor, outputLevel);
+                colors[tpp.getIndexColor()] = color1;
             }
         }    
     }

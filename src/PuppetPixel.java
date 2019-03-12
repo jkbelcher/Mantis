@@ -20,6 +20,10 @@ public class PuppetPixel extends LXAbstractFixtureMapped implements Comparable<P
         //this.panel = this.params.panel;
     }
 
+    public String getFixtureName() {
+        return Integer.toString(this.params.controllerID) + "." + Integer.toString(this.params.channel);        
+    }
+    
     @Override
     public int compareTo(PuppetPixel o) {
         int comparePosition = o.params.position;
