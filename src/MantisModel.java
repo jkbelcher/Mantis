@@ -58,6 +58,7 @@ public class MantisModel extends LXModel  implements INormalizedScope {
         PuppetPixelGroup claws = new PuppetPixelGroup();
         PuppetPixelGroup legs = new PuppetPixelGroup();
         PuppetPixelGroup wings = new PuppetPixelGroup();
+        PuppetPixelGroup abdomen = new PuppetPixelGroup();
         
         // Limbs
         for (MantisFixture f : this.allMantisFixtures) {
@@ -75,6 +76,9 @@ public class MantisModel extends LXModel  implements INormalizedScope {
             case 3:
                 wings.addPuppetPixels(newLimb);
                 break;
+            case 4:
+                abdomen.addPuppetPixels(newLimb);
+                break;
             }
         }
         
@@ -82,6 +86,7 @@ public class MantisModel extends LXModel  implements INormalizedScope {
         this.allSections.add(claws);
         this.allSections.add(legs);
         this.allSections.add(wings);
+        this.allSections.add(abdomen);
         
         // All pixels
         for (PuppetPixel pp : this.puppetPixels) {
